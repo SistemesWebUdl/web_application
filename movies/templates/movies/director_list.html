@@ -1,0 +1,14 @@
+{% extends "movies/base.html" %}
+{% block content %}
+<h1>
+    Directors
+    {% if user %}(<a href="{% url 'movies:director_create' %}">add</a>){% endif %}
+</h1>
+<ul>
+    {% for director in latest_director_list %}
+        <li><a href="{% url 'movies:director_detail' director.id 'html' %}">
+            {{ director.name }}</a></li>
+    {% empty %}<li>Sorry, no directors registered yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

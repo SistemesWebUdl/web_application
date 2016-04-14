@@ -1,0 +1,33 @@
+{% extends "movies/base.html" %}
+{% block content %}
+<h1>
+    {{ movie.name }}
+    {% if user == movie.user %}
+        (<a href="{% url 'movies:movie_edit' movie.id %}">edit</a>)
+    {% endif %}
+</h1>
+<h2>Details:</h2>
+<p>
+    Name: {{ movie.name }} <br/>
+    Release date: {{ movie.movie_release_date }} <br/>
+    Description: {{ movie.description }} <br/>
+</p>
+
+<h2>
+    Directors
+    {% if user %}
+        (<a href="{% url 'movies:director_create' %}">add</a>)
+    {% endif %}
+</h2>
+<ul>
+    {% for director in directors %}
+        <li><a href="{% url 'movies:director_detail' director.id 'html' %}">
+            {{ director.name }}</a></li>
+    {% empty %}<li>Sorry, no directors for this movie yet.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+{% block footer %}
+    Created by {{ movie.user }} on {{ movie.date }}
+{% endblock %}

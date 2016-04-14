@@ -1,0 +1,34 @@
+{% extends "movies/base.html" %}
+{% block content %}
+<h1>
+    {{ director.name }}
+    {% if user == director.user %}
+        (<a href="{% url 'movies:director_edit' director.id %}">edit</a>)
+    {% endif %}
+</h1>
+<h2>Details:</h2>
+<p>
+    Name: {{ director.name }} <br/>
+    Birthday: {{ director.birthday }} <br/>
+    Deathday: {{ director.deathday }} <br/>
+    Webpage: {{ director.url }} <br/>
+</p>
+
+<h2>
+    Films
+    {% if user %}
+        (<a href="{% url 'movies:movie_create' %}">add</a>)
+    {% endif %}
+</h2>
+<ul>
+    {% for movie in director.movies.all %}
+        <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
+            {{ movie.name }}</a></li>
+    {% empty %}<li>Sorry, no dishes for this restaurant yet.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+{% block footer %}
+    Created by {{ director.user }} on {{ director.id }}
+{% endblock %}
