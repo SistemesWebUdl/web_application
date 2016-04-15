@@ -3,9 +3,11 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import UpdateView
 from django.views.generic.base import RedirectView
 
-from movies.forms import MovieForm
-from movies.models import Movie, Director
-from views import MovieList, MovieCreate, MovieDetail, DirectorList, DirectorCreate, DirectorDetail
+from movies.forms import MovieForm, ActorForm
+from movies.models import Movie, Director, Actor
+from views import MovieList, MovieCreate, MovieDetail, \
+    DirectorList, DirectorCreate, DirectorDetail,ActorList, \
+    ActorCreate, ActorDetail
 
 urlpatterns = patterns('',
     # Home page
@@ -52,12 +54,39 @@ urlpatterns = patterns('',
         DirectorDetail.as_view(),
         name='director_detail'),
 
-    # Edit movie details, ex.: /movies/movies/1/edit/
+    # Edit director details, ex.: /movies/directors/1/edit/
     url(r'^director/(?P<pk>\d+)/edit/$',
         UpdateView.as_view(
             model=Director,
             template_name='movies/form.html',
             form_class=MovieForm),
         name='director_edit'),
+
+
+    # List actors: /movies/actors.json
+    url(r'^actors\.(?P<extension>(json|xml|html))$',
+        ActorList.as_view(),
+        name='actor_list'),
+
+    # Create a actor: /movies/actors/create/
+    url(r'^actors/create/$',
+        ActorCreate.as_view(),
+        name='actor_create'),
+
+    # Actor detail: /movies/actors/1.json
+    url(r'^actors/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',
+        ActorDetail.as_view(),
+        name='actor_detail'),
+
+    # Edit actor details, ex.: /movies/actor/1/edit/
+    url(r'^actor/(?P<pk>\d+)/edit/$',
+        UpdateView.as_view(
+            model=Actor,
+            template_name='movies/form.html',
+            form_class=ActorForm),
+        name='actor_edit'),
+
+
+
 
 )

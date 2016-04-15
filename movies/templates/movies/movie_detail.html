@@ -27,6 +27,20 @@
     {% endfor %}
 </ul>
 
+<h2>
+    Actors
+    {% if user %}
+        (<a href="{% url 'movies:actor_create' %}">add</a>)
+    {% endif %}
+</h2>
+<ul>
+    {% for actor in actors %}
+        <li><a href="{% url 'movies:actor_detail' actor.id 'html' %}">
+            {{ actor.name }}</a></li>
+    {% empty %}<li>Sorry, no actors for this movie yet.</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
 {% block footer %}
     Created by {{ movie.user }} on {{ movie.date }}

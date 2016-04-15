@@ -5,8 +5,8 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import CreateView
 
-from models import Movie, Director
-from forms import MovieForm, DirectorForm
+from models import Movie, Director, Actor
+from forms import MovieForm, DirectorForm, ActorForm
 
 class ConnegResponseMixin(TemplateResponseMixin):
 
@@ -45,13 +45,23 @@ class DirectorList(ListView, ConnegResponseMixin):
     template_name = 'movies/director_list.html'
 
 
+class ActorList(ListView, ConnegResponseMixin):
+    model = Actor
+    queryset = Actor.objects.filter(date__lte=timezone.now()).order_by('date')[:5]
+    context_object_name = 'latest_actor_list'
+    template_name = 'movies/actor_list.html'
+
+
 class MovieDetail(DetailView, ConnegResponseMixin):
     model = Movie
     template_name = 'movies/movie_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(MovieDetail, self).get_context_data(**kwargs)
-        context['directors'] = Director.objects.filter(movies=Movie.objects.filter(id=self.kwargs['pk']))
+        context['directors'] = Director.objects.filter(
+            movies=Movie.objects.filter(id=self.kwargs['pk']))
+        context['actors'] = Actor.objects.filter(
+            movies=Movie.objects.filter(id=self.kwargs['pk']))
         return context
 
 
@@ -61,6 +71,15 @@ class DirectorDetail(DetailView, ConnegResponseMixin):
 
     def get_context_data(self, **kwargs):
         context = super(DirectorDetail, self).get_context_data(**kwargs)
+        return context
+
+
+class ActorDetail(DetailView, ConnegResponseMixin):
+    model = Actor
+    template_name = 'movies/actor_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ActorDetail, self).get_context_data(**kwargs)
         return context
 
 
@@ -86,3 +105,15 @@ class DirectorCreate(CreateView):
         form.instance.user = self.request.user
         self.object.save()
         return super(DirectorCreate, self).form_valid(form)
+
+
+class ActorCreate(CreateView):
+    model = Actor
+    template_name = 'movies/form.html'
+    form_class = ActorForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        form.instance.user = self.request.user
+        self.object.save()
+        return super(ActorCreate, self).form_valid(form)

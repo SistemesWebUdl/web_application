@@ -1,7 +1,7 @@
 {% extends "movies/base.html" %}
 {% block content %}
 <h1>
-    {{ director.name }}
+    Director: {{ director.name }}
     {% if user == director.user %}
         (<a href="{% url 'movies:director_edit' director.id %}">edit</a>)
     {% endif %}
@@ -24,7 +24,7 @@
     {% for movie in director.movies.all %}
         <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
             {{ movie.name }}</a></li>
-    {% empty %}<li>Sorry, no dishes for this restaurant yet.</li>
+    {% empty %}<li>Sorry, no movies for this director yet.</li>
     {% endfor %}
 </ul>
 
