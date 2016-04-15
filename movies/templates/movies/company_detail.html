@@ -15,12 +15,9 @@
 
 <h2>
     Films
-    {% if user %}
-        (<a href="{% url 'movies:movie_create' %}">add</a>)
-    {% endif %}
 </h2>
 <ul>
-    {% for movie in company.movies.all %}
+    {% for movie in movies %}
         <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
             {{ movie.name }}</a></li>
     {% empty %}<li>Sorry, no movies for this company yet.</li>

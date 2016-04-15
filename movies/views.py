@@ -65,12 +65,6 @@ class MovieDetail(DetailView, ConnegResponseMixin):
 
     def get_context_data(self, **kwargs):
         context = super(MovieDetail, self).get_context_data(**kwargs)
-        context['directors'] = Director.objects.filter(
-            movies=Movie.objects.filter(id=self.kwargs['pk']))
-        context['actors'] = Actor.objects.filter(
-            movies=Movie.objects.filter(id=self.kwargs['pk']))
-        context['companies'] = Company.objects.filter(
-            movies=Movie.objects.filter(id=self.kwargs['pk']))
         return context
 
 
@@ -80,7 +74,10 @@ class DirectorDetail(DetailView, ConnegResponseMixin):
 
     def get_context_data(self, **kwargs):
         context = super(DirectorDetail, self).get_context_data(**kwargs)
+        context['movies'] = Movie.objects.filter(
+            directors=Director.objects.filter(id=self.kwargs['pk']))
         return context
+
 
 class ActorDetail(DetailView, ConnegResponseMixin):
     model = Actor
@@ -88,6 +85,8 @@ class ActorDetail(DetailView, ConnegResponseMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ActorDetail, self).get_context_data(**kwargs)
+        context['movies'] = Movie.objects.filter(
+            actors=Actor.objects.filter(id=self.kwargs['pk']))
         return context
 
 
@@ -97,6 +96,8 @@ class CompanyDetail(DetailView, ConnegResponseMixin):
 
     def get_context_data(self, **kwargs):
         context = super(CompanyDetail, self).get_context_data(**kwargs)
+        context['movies'] = Movie.objects.filter(
+            companies=Company.objects.filter(id=self.kwargs['pk']))
         return context
 
 

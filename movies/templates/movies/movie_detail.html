@@ -16,11 +16,11 @@
 <h2>
     Directors
     {% if user %}
-        (<a href="{% url 'movies:director_create' %}">add</a>)
+        (<a href="{% url 'movies:director_add' movie.id %}">add</a>)
     {% endif %}
 </h2>
 <ul>
-    {% for director in directors %}
+    {% for director in movie.directors.all %}
         <li><a href="{% url 'movies:director_detail' director.id 'html' %}">
             {{ director.name }}</a></li>
     {% empty %}<li>Sorry, no directors for this movie yet.</li>
@@ -30,11 +30,11 @@
 <h2>
     Actors
     {% if user %}
-        (<a href="{% url 'movies:actor_create' %}">add</a>)
+        (<a href="{% url 'movies:actor_add' movie.id %}">add</a>)
     {% endif %}
 </h2>
 <ul>
-    {% for actor in actors %}
+    {% for actor in movie.actors.all %}
         <li><a href="{% url 'movies:actor_detail' actor.id 'html' %}">
             {{ actor.name }}</a></li>
     {% empty %}<li>Sorry, no actors for this movie yet.</li>
@@ -44,11 +44,11 @@
 <h2>
     Companies
     {% if user %}
-        (<a href="{% url 'movies:company_create' %}">add</a>)
+        (<a href="{% url 'movies:company_add' movie.id %}">add</a>)
     {% endif %}
 </h2>
 <ul>
-    {% for company in companies %}
+    {% for company in movie.companies.all %}
         <li><a href="{% url 'movies:company_detail' company.id 'html' %}">
             {{ company.name }}</a></li>
     {% empty %}<li>Sorry, no company for this movie yet.</li>
