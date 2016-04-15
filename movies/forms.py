@@ -1,7 +1,16 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, ModelMultipleChoiceField, CheckboxSelectMultiple
 from models import Movie, Director, Actor, Company, Country
 
 class MovieForm(ModelForm):
+    actors = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
+                                      queryset=Actor.objects.all())
+    directors = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
+                                         queryset=Director.objects.all())
+    companies = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
+                                         queryset=Company.objects.all())
+    countries = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
+                                         queryset=Country.objects.all())
+    
     class Meta:
         model = Movie
         exclude = ('user', 'date',)
@@ -27,24 +36,32 @@ class CountryForm(ModelForm):
         exclude = ('user', 'date',)
 
 class ActorAddForm(ModelForm):
+    actors = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
+                                      queryset=Actor.objects.all())
 
     class Meta:
         model = Movie
         fields = ('actors',)
 
 class DirectorAddForm(ModelForm):
+    directors = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
+                                        queryset=Director.objects.all())
 
     class Meta:
         model = Movie
         fields = ('directors',)
 
 class CompanyAddForm(ModelForm):
+    companies = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
+                                         queryset=Company.objects.all())
 
     class Meta:
         model = Movie
         fields = ('companies',)
 
 class CountryAddForm(ModelForm):
+    countries = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
+                                         queryset=Country.objects.all())
 
     class Meta:
         model = Movie
