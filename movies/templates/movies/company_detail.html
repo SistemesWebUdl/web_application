@@ -1,8 +1,8 @@
 {% extends "movies/base.html" %}
 {% block content %}
 <h1>
-    Company: {{ actor.name }}
-    {% if user == actor.user %}
+    Company: {{ company.name }}
+    {% if user == company.user %}
         (<a href="{% url 'movies:company_edit' company.id %}">edit</a>)
     {% endif %}
 </h1>

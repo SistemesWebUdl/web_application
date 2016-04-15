@@ -3,7 +3,8 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import UpdateView
 from django.views.generic.base import RedirectView
 
-from movies.forms import MovieForm, ActorForm, CompanyForm, ActorAddForm, DirectorAddForm, CompanyAddForm
+from movies.forms import MovieForm, ActorForm, CompanyForm, \
+    ActorAddForm, DirectorAddForm, CompanyAddForm, DirectorForm
 from movies.models import Movie, Director, Actor, Company
 from views import MovieList, MovieCreate, MovieDetail, \
     DirectorList, DirectorCreate, DirectorDetail, ActorList, \
@@ -59,7 +60,7 @@ urlpatterns = patterns('',
         UpdateView.as_view(
             model=Director,
             template_name='movies/form.html',
-            form_class=MovieForm),
+            form_class=DirectorForm),
         name='director_edit'),
 
 
