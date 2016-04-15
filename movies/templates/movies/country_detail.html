@@ -1,0 +1,28 @@
+{% extends "movies/base.html" %}
+{% block content %}
+<h1>
+    Country: {{ country.name }}
+    {% if user == country.user %}
+        (<a href="{% url 'movies:country_edit' country.id %}">edit</a>)
+    {% endif %}
+</h1>
+<h2>Details:</h2>
+<p>
+    Name: {{ country.name }} <br/>
+</p>
+
+<h2>
+    Films
+</h2>
+<ul>
+    {% for movie in movies %}
+        <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
+            {{ movie.name }}</a></li>
+    {% empty %}<li>Sorry, no movies for this company yet.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+{% block footer %}
+    Created by {{ country.user }} on {{ country.id }}
+{% endblock %}

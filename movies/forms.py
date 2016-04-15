@@ -1,6 +1,5 @@
-from django.core.exceptions import NON_FIELD_ERRORS
-from django.forms import ModelForm, ModelMultipleChoiceField, forms
-from models import Movie, Director, Actor, Company
+from django.forms import ModelForm
+from models import Movie, Director, Actor, Company, Country
 
 class MovieForm(ModelForm):
     class Meta:
@@ -22,6 +21,11 @@ class CompanyForm(ModelForm):
         model = Company
         exclude = ('user', 'date',)
 
+class CountryForm(ModelForm):
+    class Meta:
+        model = Country
+        exclude = ('user', 'date',)
+
 class ActorAddForm(ModelForm):
 
     class Meta:
@@ -39,3 +43,9 @@ class CompanyAddForm(ModelForm):
     class Meta:
         model = Movie
         fields = ('companies',)
+
+class CountryAddForm(ModelForm):
+
+    class Meta:
+        model = Movie
+        fields = ('countries',)

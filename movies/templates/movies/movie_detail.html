@@ -55,6 +55,20 @@
     {% endfor %}
 </ul>
 
+<h2>
+    Countries
+    {% if user %}
+        (<a href="{% url 'movies:country_add' movie.id %}">add</a>)
+    {% endif %}
+</h2>
+<ul>
+    {% for country in movie.countries.all %}
+        <li><a href="{% url 'movies:country_detail' country.id 'html' %}">
+            {{ country.name }}</a></li>
+    {% empty %}<li>Sorry, no country for this movie yet.</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
 {% block footer %}
     Created by {{ movie.user }} on {{ movie.date }}

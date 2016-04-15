@@ -1,0 +1,14 @@
+{% extends "movies/base.html" %}
+{% block content %}
+<h1>
+    Countries
+    {% if user %}(<a href="{% url 'movies:country_create' %}">new</a>){% endif %}
+</h1>
+<ul>
+    {% for country in latest_country_list %}
+        <li><a href="{% url 'movies:country_detail' country.id 'html' %}">
+            {{ country.name }}</a></li>
+    {% empty %}<li>Sorry, no countries registered yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

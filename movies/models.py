@@ -8,7 +8,15 @@ from django.core.urlresolvers import reverse
 
 class Country(models.Model):
     name = models.CharField(max_length=40)
+    user = models.ForeignKey(User, default=1)
+    date = models.DateField(default=date.today)
 
+    def __unicode__(self):
+        return u"%s" % self.name
+
+    def get_absolute_url(self):
+        return reverse('movies:country_detail', kwargs={'pk': self.pk,
+                                                        'extension': 'html', })
 
 class Actor(models.Model):
     name = models.CharField(max_length=40)
@@ -18,7 +26,6 @@ class Actor(models.Model):
     url = models.URLField(blank=True, null=True)
     user = models.ForeignKey(User, default=1)
     date = models.DateField(default=date.today)
-
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -68,7 +75,7 @@ class Movie(models.Model):
     description = models.TextField()
     user = models.ForeignKey(User, default=1)
     date = models.DateField(default=date.today)
-    # countries = models.ManyToManyField(Country, default=1)
+    countries = models.ManyToManyField(Country, blank=True, null=True)
     actors = models.ManyToManyField(Actor, blank=True, null=True)
     directors = models.ManyToManyField(Director, blank=True, null=True)
     companies = models.ManyToManyField(Company, blank=True, null=True)

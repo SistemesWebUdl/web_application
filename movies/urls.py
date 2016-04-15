@@ -4,11 +4,12 @@ from django.views.generic import UpdateView
 from django.views.generic.base import RedirectView
 
 from movies.forms import MovieForm, ActorForm, CompanyForm, \
-    ActorAddForm, DirectorAddForm, CompanyAddForm, DirectorForm
-from movies.models import Movie, Director, Actor, Company
+    ActorAddForm, DirectorAddForm, CompanyAddForm, DirectorForm, CountryForm, CountryAddForm
+from movies.models import Movie, Director, Actor, Company, Country
 from views import MovieList, MovieCreate, MovieDetail, \
     DirectorList, DirectorCreate, DirectorDetail, ActorList, \
-    ActorCreate, ActorDetail, CompanyList, CompanyDetail, CompanyCreate
+    ActorCreate, ActorDetail, CompanyList, CompanyDetail, CompanyCreate, \
+    CountryList, CountryDetail, CountryCreate
 
 urlpatterns = patterns('',
     # Home page
@@ -111,6 +112,29 @@ urlpatterns = patterns('',
             form_class=CompanyForm),
         name='company_edit'),
 
+    # List countries: /movies/countries.json
+    url(r'^countries\.(?P<extension>(json|xml|html))$',
+        CountryList.as_view(),
+        name='country_list'),
+
+    # Create a country: /movies/countries/create/
+    url(r'^countries/create/$',
+        CountryCreate.as_view(),
+        name='country_create'),
+
+    # Country detail: /movies/countries/1.json
+    url(r'^countries/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',
+        CountryDetail.as_view(),
+        name='country_detail'),
+
+    # Edit countries details, ex.: /movies/countries/1/edit/
+    url(r'^countries/(?P<pk>\d+)/edit/$',
+        UpdateView.as_view(
+            model=Country,
+            template_name='movies/form.html',
+            form_class=CountryForm),
+        name='country_edit'),
+
     # Add actors to movie: /movies/actors/1/add/
     url(r'^actors/(?P<pk>\d+)/add/$',
         UpdateView.as_view(
@@ -135,5 +159,13 @@ urlpatterns = patterns('',
             template_name='movies/form.html',
             form_class=CompanyAddForm),
         name='company_add'),
+
+    # Add countries to movie: /movies/countries/1/add/
+    url(r'^countries/(?P<pk>\d+)/add/$',
+        UpdateView.as_view(
+            model=Movie,
+            template_name='movies/form.html',
+            form_class=CountryAddForm),
+        name='country_add'),
 
 )

@@ -5,8 +5,8 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import CreateView
 
-from models import Movie, Director, Actor, Company
-from forms import MovieForm, DirectorForm, ActorForm, CompanyForm
+from models import Movie, Director, Actor, Company, Country
+from forms import MovieForm, DirectorForm, ActorForm, CompanyForm, CountryForm
 
 class ConnegResponseMixin(TemplateResponseMixin):
 
@@ -59,6 +59,13 @@ class CompanyList(ListView, ConnegResponseMixin):
     template_name = 'movies/company_list.html'
 
 
+class CountryList(ListView, ConnegResponseMixin):
+    model = Country
+    queryset = Country.objects.filter(date__lte=timezone.now()).order_by('date')[:5]
+    context_object_name = 'latest_country_list'
+    template_name = 'movies/country_list.html'
+
+
 class MovieDetail(DetailView, ConnegResponseMixin):
     model = Movie
     template_name = 'movies/movie_detail.html'
@@ -98,6 +105,17 @@ class CompanyDetail(DetailView, ConnegResponseMixin):
         context = super(CompanyDetail, self).get_context_data(**kwargs)
         context['movies'] = Movie.objects.filter(
             companies=Company.objects.filter(id=self.kwargs['pk']))
+        return context
+
+
+class CountryDetail(DetailView, ConnegResponseMixin):
+    model = Country
+    template_name = 'movies/country_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountryDetail, self).get_context_data(**kwargs)
+        context['movies'] = Movie.objects.filter(
+            countries=Country.objects.filter(id=self.kwargs['pk']))
         return context
 
 
@@ -147,3 +165,15 @@ class CompanyCreate(CreateView):
         form.instance.user = self.request.user
         self.object.save()
         return super(CompanyCreate, self).form_valid(form)
+
+
+class CountryCreate(CreateView):
+    model = Country
+    template_name = 'movies/form.html'
+    form_class = CountryForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        form.instance.user = self.request.user
+        self.object.save()
+        return super(CountryCreate, self).form_valid(form)
