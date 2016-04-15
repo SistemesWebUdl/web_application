@@ -1,0 +1,14 @@
+{% extends "movies/base.html" %}
+{% block content %}
+<h1>
+    Companies
+    {% if user %}(<a href="{% url 'movies:company_create' %}">add</a>){% endif %}
+</h1>
+<ul>
+    {% for company in latest_companies_list %}
+        <li><a href="{% url 'movies:company_detail' company.id 'html' %}">
+            {{ company.name }}</a></li>
+    {% empty %}<li>Sorry, no companies registered yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -5,8 +5,8 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import CreateView
 
-from models import Movie, Director, Actor
-from forms import MovieForm, DirectorForm, ActorForm
+from models import Movie, Director, Actor, Company
+from forms import MovieForm, DirectorForm, ActorForm, CompanyForm
 
 class ConnegResponseMixin(TemplateResponseMixin):
 
@@ -52,6 +52,13 @@ class ActorList(ListView, ConnegResponseMixin):
     template_name = 'movies/actor_list.html'
 
 
+class CompanyList(ListView, ConnegResponseMixin):
+    model = Company
+    queryset = Company.objects.filter(date__lte=timezone.now()).order_by('date')[:5]
+    context_object_name = 'latest_company_list'
+    template_name = 'movies/company_list.html'
+
+
 class MovieDetail(DetailView, ConnegResponseMixin):
     model = Movie
     template_name = 'movies/movie_detail.html'
@@ -61,6 +68,8 @@ class MovieDetail(DetailView, ConnegResponseMixin):
         context['directors'] = Director.objects.filter(
             movies=Movie.objects.filter(id=self.kwargs['pk']))
         context['actors'] = Actor.objects.filter(
+            movies=Movie.objects.filter(id=self.kwargs['pk']))
+        context['companies'] = Company.objects.filter(
             movies=Movie.objects.filter(id=self.kwargs['pk']))
         return context
 
@@ -73,13 +82,21 @@ class DirectorDetail(DetailView, ConnegResponseMixin):
         context = super(DirectorDetail, self).get_context_data(**kwargs)
         return context
 
-
 class ActorDetail(DetailView, ConnegResponseMixin):
     model = Actor
     template_name = 'movies/actor_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(ActorDetail, self).get_context_data(**kwargs)
+        return context
+
+
+class CompanyDetail(DetailView, ConnegResponseMixin):
+    model = Company
+    template_name = 'movies/company_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CompanyDetail, self).get_context_data(**kwargs)
         return context
 
 
@@ -117,3 +134,15 @@ class ActorCreate(CreateView):
         form.instance.user = self.request.user
         self.object.save()
         return super(ActorCreate, self).form_valid(form)
+
+
+class CompanyCreate(CreateView):
+    model = Company
+    template_name = 'movies/form.html'
+    form_class = CompanyForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        form.instance.user = self.request.user
+        self.object.save()
+        return super(CompanyCreate, self).form_valid(form)

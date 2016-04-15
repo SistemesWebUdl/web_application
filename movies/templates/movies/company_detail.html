@@ -1,0 +1,33 @@
+{% extends "movies/base.html" %}
+{% block content %}
+<h1>
+    Company: {{ actor.name }}
+    {% if user == actor.user %}
+        (<a href="{% url 'movies:company_edit' company.id %}">edit</a>)
+    {% endif %}
+</h1>
+<h2>Details:</h2>
+<p>
+    Name: {{ company.name }} <br/>
+    Description: {{ company.description }} <br/>
+    Webpage: {{ company.url }} <br/>
+</p>
+
+<h2>
+    Films
+    {% if user %}
+        (<a href="{% url 'movies:movie_create' %}">add</a>)
+    {% endif %}
+</h2>
+<ul>
+    {% for movie in company.movies.all %}
+        <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
+            {{ movie.name }}</a></li>
+    {% empty %}<li>Sorry, no movies for this company yet.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+{% block footer %}
+    Created by {{ company.user }} on {{ company.id }}
+{% endblock %}

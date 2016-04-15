@@ -41,6 +41,20 @@
     {% endfor %}
 </ul>
 
+<h2>
+    Companies
+    {% if user %}
+        (<a href="{% url 'movies:company_create' %}">add</a>)
+    {% endif %}
+</h2>
+<ul>
+    {% for company in companies %}
+        <li><a href="{% url 'movies:company_detail' company.id 'html' %}">
+            {{ company.name }}</a></li>
+    {% empty %}<li>Sorry, no company for this movie yet.</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
 {% block footer %}
     Created by {{ movie.user }} on {{ movie.date }}

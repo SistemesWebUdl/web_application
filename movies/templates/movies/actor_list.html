@@ -6,7 +6,7 @@
 </h1>
 <ul>
     {% for actor in latest_actor_list %}
-        <li><a href="{% url 'movies:actor_detail' director.id 'html' %}">
+        <li><a href="{% url 'movies:actor_detail' actor.id 'html' %}">
             {{ actor.name }}</a></li>
     {% empty %}<li>Sorry, no actors registered yet.</li>
     {% endfor %}

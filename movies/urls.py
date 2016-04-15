@@ -3,11 +3,11 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import UpdateView
 from django.views.generic.base import RedirectView
 
-from movies.forms import MovieForm, ActorForm
-from movies.models import Movie, Director, Actor
+from movies.forms import MovieForm, ActorForm, CompanyForm
+from movies.models import Movie, Director, Actor, Company
 from views import MovieList, MovieCreate, MovieDetail, \
-    DirectorList, DirectorCreate, DirectorDetail,ActorList, \
-    ActorCreate, ActorDetail
+    DirectorList, DirectorCreate, DirectorDetail, ActorList, \
+    ActorCreate, ActorDetail, CompanyList, CompanyDetail, CompanyCreate
 
 urlpatterns = patterns('',
     # Home page
@@ -78,8 +78,8 @@ urlpatterns = patterns('',
         ActorDetail.as_view(),
         name='actor_detail'),
 
-    # Edit actor details, ex.: /movies/actor/1/edit/
-    url(r'^actor/(?P<pk>\d+)/edit/$',
+    # Edit actor details, ex.: /movies/actors/1/edit/
+    url(r'^actors/(?P<pk>\d+)/edit/$',
         UpdateView.as_view(
             model=Actor,
             template_name='movies/form.html',
@@ -87,6 +87,27 @@ urlpatterns = patterns('',
         name='actor_edit'),
 
 
+    # List companies: /movies/companies.json
+    url(r'^companies\.(?P<extension>(json|xml|html))$',
+        CompanyList.as_view(),
+        name='company_list'),
 
+    # Create a company: /movies/companies/create/
+    url(r'^companies/create/$',
+        CompanyCreate.as_view(),
+        name='company_create'),
+
+    # Company detail: /movies/companies/1.json
+    url(r'^companies/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',
+        CompanyDetail.as_view(),
+        name='company_detail'),
+
+    # Edit companies details, ex.: /movies/companies/1/edit/
+    url(r'^companies/(?P<pk>\d+)/edit/$',
+        UpdateView.as_view(
+            model=Company,
+            template_name='movies/form.html',
+            form_class=CompanyForm),
+        name='company_edit'),
 
 )

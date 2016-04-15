@@ -10,13 +10,6 @@ class Country(models.Model):
     name = models.CharField(max_length=40)
 
 
-class Company(models.Model):
-    name = models.CharField(max_length=40)
-    description = models.TextField(blank=True, null=True)
-    url = models.URLField(blank=True, null=True)
-    # country = models.ForeignKey(Country, default=1)
-
-
 class Movie(models.Model):
     name = models.CharField(max_length=40)
     movie_release_date = models.DateField(default=date.today)
@@ -69,3 +62,20 @@ class Director(models.Model):
     def get_absolute_url(self):
         return reverse('movies:director_detail', kwargs={'pk': self.pk,
                                                          'extension': 'html', })
+
+
+class Company(models.Model):
+    name = models.CharField(max_length=40)
+    description = models.TextField(blank=True, null=True)
+    url = models.URLField(blank=True, null=True)
+    # country = models.ForeignKey(Country, default=1)
+    user = models.ForeignKey(User, default=1)
+    date = models.DateField(default=date.today)
+    movies = models.ManyToManyField(Movie, related_name='companies')
+
+    def __unicode__(self):
+        return u"%s" % self.name
+
+    def get_absolute_url(self):
+        return reverse('movies:company_detail', kwargs={'pk': self.pk,
+                                                        'extension': 'html', })
