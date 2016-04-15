@@ -13,7 +13,10 @@
     {% endblock %}
 </div>
 <div id="sidebar">
-    {% block sidebar %}<ul><li><a href="/movies">Home</a></li></ul>{% endblock %}
+    {% block sidebar %}<ul><li><a href="/movies">Home</a></li></ul>
+    <ul><li><a href="{% url 'movies:actor_list' 'html' %}">Actors</a></li></ul>
+    <ul><li><a href="{% url 'movies:director_list' 'html' %}">Directors</a></li></ul>
+    <ul><li><a href="{% url 'movies:company_list' 'html' %}">Companies</a></li></ul>{% endblock %}
 </div>
 <div id="content">
     {% block content %}
