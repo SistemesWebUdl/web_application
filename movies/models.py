@@ -69,9 +69,9 @@ class Movie(models.Model):
     user = models.ForeignKey(User, default=1)
     date = models.DateField(default=date.today)
     # countries = models.ManyToManyField(Country, default=1)
-    actors = models.ManyToManyField(Actor)
-    directors = models.ManyToManyField(Director)
-    companies = models.ManyToManyField(Company)
+    actors = models.ManyToManyField(Actor, blank=True, null=True)
+    directors = models.ManyToManyField(Director, blank=True, null=True)
+    companies = models.ManyToManyField(Company, blank=True, null=True)
 
     def __unicode__(self):
         return u"%s" % self.name
