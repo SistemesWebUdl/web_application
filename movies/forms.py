@@ -10,7 +10,7 @@ class MovieForm(ModelForm):
                                          queryset=Company.objects.all())
     countries = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
                                          queryset=Country.objects.all())
-    
+
     class Meta:
         model = Movie
         exclude = ('user', 'date',)
@@ -66,3 +66,22 @@ class CountryAddForm(ModelForm):
     class Meta:
         model = Movie
         fields = ('countries',)
+
+
+class CountryDirectorForm(ModelForm):
+
+    class Meta:
+        model = Director
+        fields = ('country',)
+
+class CountryActorForm(ModelForm):
+
+    class Meta:
+        model = Actor
+        fields = ('country',)
+
+class CountryCompanyForm(ModelForm):
+
+    class Meta:
+        model = Company
+        fields = ('country',)

@@ -12,6 +12,7 @@
     Birthday: {{ actor.birthday }} <br/>
     Deathday: {{ actor.deathday }} <br/>
     Webpage: {{ actor.url }} <br/>
+    Country: {{ actor.country }} (<a href="{% url 'movies:country_actor_edit' actor.id %}">edit</a>) <br/>
 </p>
 
 <h2>

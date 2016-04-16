@@ -4,7 +4,9 @@ from django.views.generic import UpdateView
 from django.views.generic.base import RedirectView
 
 from movies.forms import MovieForm, ActorForm, CompanyForm, \
-    ActorAddForm, DirectorAddForm, CompanyAddForm, DirectorForm, CountryForm, CountryAddForm
+    ActorAddForm, DirectorAddForm, CompanyAddForm, DirectorForm, \
+    CountryForm, CountryAddForm, CountryDirectorForm, CountryActorForm, \
+    CountryCompanyForm
 from movies.models import Movie, Director, Actor, Company, Country
 from views import MovieList, MovieCreate, MovieDetail, \
     DirectorList, DirectorCreate, DirectorDetail, ActorList, \
@@ -167,5 +169,32 @@ urlpatterns = patterns('',
             template_name='movies/form.html',
             form_class=CountryAddForm),
         name='country_add'),
+
+    # Select a country for a director: /movies/directors/1/edit_country
+    url(r'^directors/(?P<pk>\d+)/edit_country/$',
+        UpdateView.as_view(
+            model=Director,
+            template_name='movies/form.html',
+            form_class=CountryDirectorForm),
+        name='country_director_edit'),
+
+    # Select a country for an actor: /movies/actors/1/edit_country
+    url(r'^actors/(?P<pk>\d+)/edit_country/$',
+        UpdateView.as_view(
+            model=Actor,
+            template_name='movies/form.html',
+            form_class=CountryActorForm),
+        name='country_actor_edit'),
+
+    # Select a country for an actor: /movies/companies/1/edit_country
+    url(r'^companies/(?P<pk>\d+)/edit_country/$',
+        UpdateView.as_view(
+            model=Company,
+            template_name='movies/form.html',
+            form_class=CountryCompanyForm),
+        name='country_company_edit'),
+
+
+
 
 )

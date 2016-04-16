@@ -21,6 +21,36 @@
     {% empty %}<li>Sorry, no movies for this company yet.</li>
     {% endfor %}
 </ul>
+<h2>
+    Actors
+</h2>
+<ul>
+    {% for actor in actors %}
+        <li><a href="{% url 'movies:actor_detail' actor.id 'html' %}">
+            {{ actor.name }}</a></li>
+    {% empty %}<li>Sorry, no actors for this country yet.</li>
+    {% endfor %}
+</ul>
+<h2>
+    Directors
+</h2>
+<ul>
+    {% for director in directors %}
+        <li><a href="{% url 'movies:director_detail' director.id 'html' %}">
+            {{ director.name }}</a></li>
+    {% empty %}<li>Sorry, no directors for this country yet.</li>
+    {% endfor %}
+</ul>
+<h2>
+    Companies
+</h2>
+<ul>
+    {% for company in companies %}
+        <li><a href="{% url 'movies:company_detail' company.id 'html' %}">
+            {{ company.name }}</a></li>
+    {% empty %}<li>Sorry, no companies for this country yet.</li>
+    {% endfor %}
+</ul>
 
 {% endblock %}
 {% block footer %}

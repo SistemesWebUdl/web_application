@@ -11,6 +11,7 @@
     Name: {{ company.name }} <br/>
     Description: {{ company.description }} <br/>
     Webpage: {{ company.url }} <br/>
+    Country: {{ company.country }} (<a href="{% url 'movies:country_company_edit' company.id %}">edit</a>) <br/>
 </p>
 
 <h2>

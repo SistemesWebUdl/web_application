@@ -22,9 +22,9 @@ class Actor(models.Model):
     name = models.CharField(max_length=40)
     birthday = models.DateField(default=date.today)
     deathday = models.DateField(blank=True, null=True)
-    # country = models.ForeignKey(Country, default=1)
+    country = models.ForeignKey(Country, default=1)
     url = models.URLField(blank=True, null=True)
-    user = models.ForeignKey(User, default=1)
+    user = models.ForeignKey(User, blank=True, null=True)
     date = models.DateField(default=date.today)
 
     def __unicode__(self):
@@ -39,7 +39,7 @@ class Director(models.Model):
     name = models.CharField(max_length=40)
     birthday = models.DateField(default=date.today)
     deathday = models.DateField(blank=True, null=True)
-    # country = models.ForeignKey(Country, default=1)
+    country = models.ForeignKey(Country, blank=True, null=True)
     url = models.URLField(blank=True, null=True)
     user = models.ForeignKey(User, default=1)
     date = models.DateField(default=date.today)
@@ -48,16 +48,14 @@ class Director(models.Model):
         return u"%s" % self.name
 
     def get_absolute_url(self):
-        return reverse('movies:director_detail', kwargs={'pk': self.pk,
-
-                                                         'extension': 'html', })
+        return reverse('movies:director_detail', kwargs={'pk': self.pk, 'extension': 'html', })
 
 
 class Company(models.Model):
     name = models.CharField(max_length=40)
     description = models.TextField(blank=True, null=True)
     url = models.URLField(blank=True, null=True)
-    # country = models.ForeignKey(Country, default=1)
+    country = models.ForeignKey(Country, blank=True, null=True)
     user = models.ForeignKey(User, default=1)
     date = models.DateField(default=date.today)
 

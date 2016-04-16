@@ -116,6 +116,12 @@ class CountryDetail(DetailView, ConnegResponseMixin):
         context = super(CountryDetail, self).get_context_data(**kwargs)
         context['movies'] = Movie.objects.filter(
             countries=Country.objects.filter(id=self.kwargs['pk']))
+        context['actors'] = Actor.objects.filter(
+            country=Country.objects.filter(id=self.kwargs['pk']))
+        context['directors'] = Director.objects.filter(
+            country=Country.objects.filter(id=self.kwargs['pk']))
+        context['companies'] = Company.objects.filter(
+            country=Country.objects.filter(id=self.kwargs['pk']))
         return context
 
 
