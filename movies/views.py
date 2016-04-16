@@ -33,35 +33,30 @@ class ConnegResponseMixin(TemplateResponseMixin):
 
 class MovieList(ListView, ConnegResponseMixin):
     model = Movie
-    queryset = Movie.objects.filter(date__lte=timezone.now()).order_by('date')[:5]
     context_object_name = 'latest_movie_list'
     template_name = 'movies/movie_list.html'
 
 
 class DirectorList(ListView, ConnegResponseMixin):
     model = Director
-    queryset = Director.objects.filter(date__lte=timezone.now()).order_by('date')[:5]
     context_object_name = 'latest_director_list'
     template_name = 'movies/director_list.html'
 
 
 class ActorList(ListView, ConnegResponseMixin):
     model = Actor
-    queryset = Actor.objects.filter(date__lte=timezone.now()).order_by('date')[:5]
     context_object_name = 'latest_actor_list'
     template_name = 'movies/actor_list.html'
 
 
 class CompanyList(ListView, ConnegResponseMixin):
     model = Company
-    queryset = Company.objects.filter(date__lte=timezone.now()).order_by('date')[:5]
     context_object_name = 'latest_company_list'
     template_name = 'movies/company_list.html'
 
 
 class CountryList(ListView, ConnegResponseMixin):
     model = Country
-    queryset = Country.objects.filter(date__lte=timezone.now()).order_by('date')[:5]
     context_object_name = 'latest_country_list'
     template_name = 'movies/country_list.html'
 
