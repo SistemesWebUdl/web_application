@@ -2,7 +2,7 @@
 {% block content %}
 <h1>
     Country: {{ country.name }}
-    {% if user == country.user %}
+    {% if user == movie.user or user.is_superuser %}
         (<a href="{% url 'movies:country_edit' country.id %}">edit</a>)
     {% endif %}
 </h1>

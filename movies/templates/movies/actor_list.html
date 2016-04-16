@@ -2,7 +2,7 @@
 {% block content %}
 <h1>
     Actors
-    {% if user %}(<a href="{% url 'movies:actor_create' %}">new</a>){% endif %}
+    {% if user.is_authenticated %}(<a href="{% url 'movies:actor_create' %}">new</a>){% endif %}
 </h1>
 <ul>
     {% for actor in latest_actor_list %}

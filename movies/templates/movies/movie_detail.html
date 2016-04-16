@@ -2,7 +2,7 @@
 {% block content %}
 <h1>
     {{ movie.name }}
-    {% if user == movie.user %}
+    {% if user == movie.user or user.is_superuser %}
         (<a href="{% url 'movies:movie_edit' movie.id %}">edit</a>)
     {% endif %}
 </h1>
@@ -15,7 +15,7 @@
 
 <h2>
     Directors
-    {% if user %}
+    {% if user == movie.user or user.is_superuser %}
         (<a href="{% url 'movies:director_add' movie.id %}">add</a>)
     {% endif %}
 </h2>
@@ -29,7 +29,7 @@
 
 <h2>
     Actors
-    {% if user %}
+    {% if user == movie.user or user.is_superuser %}
         (<a href="{% url 'movies:actor_add' movie.id %}">add</a>)
     {% endif %}
 </h2>
@@ -43,7 +43,7 @@
 
 <h2>
     Companies
-    {% if user %}
+    {% if user == movie.user or user.is_superuser %}
         (<a href="{% url 'movies:company_add' movie.id %}">add</a>)
     {% endif %}
 </h2>
@@ -57,7 +57,7 @@
 
 <h2>
     Countries
-    {% if user %}
+    {% if user == movie.user or user.is_superuser %}
         (<a href="{% url 'movies:country_add' movie.id %}">add</a>)
     {% endif %}
 </h2>

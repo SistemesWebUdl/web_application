@@ -2,7 +2,7 @@
 {% block content %}
 <h1>
     Actor: {{ actor.name }}
-    {% if user == actor.user %}
+    {% if user == movie.user or user.is_superuser %}
         (<a href="{% url 'movies:actor_edit' actor.id %}">edit</a>)
     {% endif %}
 </h1>
@@ -12,7 +12,11 @@
     Birthday: {{ actor.birthday }} <br/>
     Deathday: {{ actor.deathday }} <br/>
     Webpage: {{ actor.url }} <br/>
-    Country: {{ actor.country }} (<a href="{% url 'movies:country_actor_edit' actor.id %}">edit</a>) <br/>
+    Country: {{ actor.country }}
+    {% if user == movie.user or user.is_superuser %}
+        (<a href="{% url 'movies:country_actor_edit' actor.id %}">edit</a>)
+    {% endif %}
+    <br/>
 </p>
 
 <h2>

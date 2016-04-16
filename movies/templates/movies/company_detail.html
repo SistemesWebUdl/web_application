@@ -2,7 +2,7 @@
 {% block content %}
 <h1>
     Company: {{ company.name }}
-    {% if user == company.user %}
+    {% if user == movie.user or user.is_superuser %}
         (<a href="{% url 'movies:company_edit' company.id %}">edit</a>)
     {% endif %}
 </h1>
@@ -11,7 +11,11 @@
     Name: {{ company.name }} <br/>
     Description: {{ company.description }} <br/>
     Webpage: {{ company.url }} <br/>
-    Country: {{ company.country }} (<a href="{% url 'movies:country_company_edit' company.id %}">edit</a>) <br/>
+    Country: {{ company.country }}
+    {% if user == movie.user or user.is_superuser %}
+    (<a href="{% url 'movies:country_company_edit' company.id %}">edit</a>)
+    {% endif %}
+    <br/>
 </p>
 
 <h2>

@@ -2,7 +2,7 @@
 {% block content %}
 <h1>
     Directors
-    {% if user %}(<a href="{% url 'movies:director_create' %}">new</a>){% endif %}
+    {% if user.is_authenticated %}(<a href="{% url 'movies:director_create' %}">new</a>){% endif %}
 </h1>
 <ul>
     {% for director in latest_director_list %}
