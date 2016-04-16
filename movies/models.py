@@ -26,6 +26,7 @@ class Actor(models.Model):
     url = models.URLField(blank=True, null=True)
     user = models.ForeignKey(User, blank=True, null=True)
     date = models.DateField(default=date.today)
+    image = models.ImageField(upload_to="movie", blank=True, null=True)
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -43,6 +44,8 @@ class Director(models.Model):
     url = models.URLField(blank=True, null=True)
     user = models.ForeignKey(User, default=1)
     date = models.DateField(default=date.today)
+    image = models.ImageField(upload_to="movie", blank=True, null=True)
+
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -77,6 +80,7 @@ class Movie(models.Model):
     actors = models.ManyToManyField(Actor, blank=True, null=True)
     directors = models.ManyToManyField(Director, blank=True, null=True)
     companies = models.ManyToManyField(Company, blank=True, null=True)
+    image = models.ImageField(upload_to="movie", blank=True, null=True)
 
     def __unicode__(self):
         return u"%s" % self.name

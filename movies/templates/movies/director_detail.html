@@ -17,6 +17,10 @@
     (<a href="{% url 'movies:country_director_edit' director.id %}">edit</a>)
     {% endif %}
     <br/>
+    {%  if director.image %}
+        <p><img src="{{ director.image.url }}"/></p>
+    {% endif %}
+    <br/>
 </p>
 
 <h2>

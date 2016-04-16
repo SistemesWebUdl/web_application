@@ -11,6 +11,10 @@
     Name: {{ movie.name }} <br/>
     Release date: {{ movie.movie_release_date }} <br/>
     Description: {{ movie.description }} <br/>
+    {%  if movie.image %}
+        <p><img src="{{ movie.image.url }}"/></p>
+    {% endif %}
+    <br/>
 </p>
 
 <h2>
