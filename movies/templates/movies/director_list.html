@@ -11,7 +11,7 @@
         <li><a href="{% url 'movies:director_detail' director.id 'html' %}">
             {{ director.name }}</a>
         <font size="2">(<a href="{% url 'movies:director_detail' director.id 'xml' %}">xml</a>)</font>
-        <font size="2">(<a href="{% url 'movies:direcotr_detail' director.id 'json' %}">json</a>)</font>
+        <font size="2">(<a href="{% url 'movies:director_detail' director.id 'json' %}">json</a>)</font>
         </li>
     {% empty %}<li>Sorry, no directors registered yet.</li>
     {% endfor %}
