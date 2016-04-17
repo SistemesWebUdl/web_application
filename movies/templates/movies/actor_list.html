@@ -3,11 +3,16 @@
 <h1>
     Actors
     {% if user.is_authenticated %}(<a href="{% url 'movies:actor_create' %}">new</a>){% endif %}
+    <font size="3">(<a href="{% url 'movies:actor_list' 'xml' %}">xml</a>)</font>
+    <font size="3">(<a href="{% url 'movies:actor_list' 'json' %}">json</a>)</font>
 </h1>
 <ul>
     {% for actor in latest_actor_list %}
         <li><a href="{% url 'movies:actor_detail' actor.id 'html' %}">
-            {{ actor.name }}</a></li>
+            {{ actor.name }}</a>
+        <font size="2">(<a href="{% url 'movies:actor_detail' actor.id 'xml' %}">xml</a>)</font>
+        <font size="2">(<a href="{% url 'movies:actor_detail' actor.id 'json' %}">json</a>)</font>
+        </li>
     {% empty %}<li>Sorry, no actors registered yet.</li>
     {% endfor %}
 </ul>

@@ -3,11 +3,17 @@
 <h1>
     Movies
     {% if user.is_authenticated %}(<a href="{% url 'movies:movie_create' %}">new</a>){% endif %}
+    <font size="3">(<a href="{% url 'movies:movie_list' 'xml' %}">xml</a>)</font>
+    <font size="3">(<a href="{% url 'movies:movie_list' 'json' %}">json</a>)</font>
+
 </h1>
 <ul>
     {% for movie in latest_movie_list %}
         <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
-            {{ movie.name }}</a></li>
+            {{ movie.name }}</a>
+        <font size="2">(<a href="{% url 'movies:movie_detail' movie.id 'xml' %}">xml</a>)</font>
+        <font size="2">(<a href="{% url 'movies:movie_detail' movie.id 'json' %}">json</a>)</font>
+        </li>
     {% empty %}<li>Sorry, no movies registered yet.</li>
     {% endfor %}
 </ul>

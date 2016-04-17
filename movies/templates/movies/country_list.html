@@ -3,11 +3,16 @@
 <h1>
     Countries
     {% if user.is_authenticated %}(<a href="{% url 'movies:country_create' %}">new</a>){% endif %}
+    <font size="3">(<a href="{% url 'movies:country_list' 'xml' %}">xml</a>)</font>
+    <font size="3">(<a href="{% url 'movies:country_list' 'json' %}">json</a>)</font>
 </h1>
 <ul>
     {% for country in latest_country_list %}
         <li><a href="{% url 'movies:country_detail' country.id 'html' %}">
-            {{ country.name }}</a></li>
+            {{ country.name }}</a>
+        <font size="2">(<a href="{% url 'movies:country_detail' country.id 'xml' %}">xml</a>)</font>
+        <font size="2">(<a href="{% url 'movies:country_detail' country.id 'json' %}">json</a>)</font>
+        </li>
     {% empty %}<li>Sorry, no countries registered yet.</li>
     {% endfor %}
 </ul>

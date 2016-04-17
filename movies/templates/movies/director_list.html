@@ -3,11 +3,16 @@
 <h1>
     Directors
     {% if user.is_authenticated %}(<a href="{% url 'movies:director_create' %}">new</a>){% endif %}
+    <font size="3">(<a href="{% url 'movies:director_list' 'xml' %}">xml</a>)</font>
+    <font size="3">(<a href="{% url 'movies:director_list' 'json' %}">json</a>)</font>
 </h1>
 <ul>
     {% for director in latest_director_list %}
         <li><a href="{% url 'movies:director_detail' director.id 'html' %}">
-            {{ director.name }}</a></li>
+            {{ director.name }}</a>
+        <font size="2">(<a href="{% url 'movies:director_detail' director.id 'xml' %}">xml</a>)</font>
+        <font size="2">(<a href="{% url 'movies:direcotr_detail' director.id 'json' %}">json</a>)</font>
+        </li>
     {% empty %}<li>Sorry, no directors registered yet.</li>
     {% endfor %}
 </ul>
