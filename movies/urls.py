@@ -137,8 +137,8 @@ urlpatterns = patterns('',
             form_class=CountryForm),
         name='country_edit'),
 
-    # Add actors to movie: /movies/actors/1/add/
-    url(r'^actors/(?P<pk>\d+)/add/$',
+    # Add actors to movie: /movies/movies/1/actors/add/
+    url(r'^movies/(?P<pk>\d+)/actors/add/$',
         UpdateView.as_view(
             model=Movie,
             template_name='movies/form.html',
@@ -146,24 +146,24 @@ urlpatterns = patterns('',
         name='actor_add'),
 
 
-    # Add directors to movie: /movies/directors/1/add/
-    url(r'^directors/(?P<pk>\d+)/add/$',
+    # Add directors to movie: /movies/movies/1/directors/add/
+    url(r'^movies/(?P<pk>\d+)/directors/add/$',
         UpdateView.as_view(
             model=Movie,
             template_name='movies/form.html',
             form_class=DirectorAddForm),
         name='director_add'),
 
-    # Add companies to movie: /movies/companies/1/add/
-    url(r'^companies/(?P<pk>\d+)/add/$',
+    # Add companies to movie: /movies/movies/1/companies/add/
+    url(r'^movies/(?P<pk>\d+)/companies/add/$',
         UpdateView.as_view(
             model=Movie,
             template_name='movies/form.html',
             form_class=CompanyAddForm),
         name='company_add'),
 
-    # Add countries to movie: /movies/countries/1/add/
-    url(r'^countries/(?P<pk>\d+)/add/$',
+    # Add countries to movie: /movies/movies/1/countries/add/
+    url(r'^movies/(?P<pk>\d+)/countries/add/$',
         UpdateView.as_view(
             model=Movie,
             template_name='movies/form.html',
