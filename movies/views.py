@@ -178,3 +178,4 @@ class CountryCreate(CreateView):
         form.instance.user = self.request.user
         self.object.save()
         return super(CountryCreate, self).form_valid(form)
+
