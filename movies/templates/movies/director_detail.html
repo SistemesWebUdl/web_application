@@ -29,7 +29,7 @@
 <ul>
     {% for movie in movies %}
         <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
-            {{ movie.name }}</a></li>
+            {{ movie.movie_name }}</a></li>
     {% empty %}<li>Sorry, no movies for this director yet.</li>
     {% endfor %}
 </ul>

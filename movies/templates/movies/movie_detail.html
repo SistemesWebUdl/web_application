@@ -1,14 +1,14 @@
 {% extends "movies/base.html" %}
 {% block content %}
 <h1>
-    {{ movie.name }}
+    {{ movie.movie_name }}
     {% if user == movie.user or user.is_superuser %}
         (<a href="{% url 'movies:movie_edit' movie.id %}">edit</a>)
     {% endif %}
 </h1>
 <h2>Details:</h2>
 <p>
-    Name: {{ movie.name }} <br/>
+    Name: {{ movie.movie_name }} <br/>
     Release date: {{ movie.movie_release_date }} <br/>
     Description: {{ movie.description }} <br/>
     {%  if movie.image %}

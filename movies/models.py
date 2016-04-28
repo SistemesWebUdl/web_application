@@ -73,7 +73,7 @@ class Company(models.Model):
 
 
 class Movie(models.Model):
-    name = models.CharField(max_length=40)
+    movie_name = models.CharField(max_length=40)
     movie_release_date = models.DateField(default=date.today)
     description = models.TextField()
     user = models.ForeignKey(User, default=1)

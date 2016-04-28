@@ -10,7 +10,7 @@
 <ul>
     {% for movie in latest_movie_list %}
         <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
-            {{ movie.name }}</a>
+            {{ movie.movie_name }}</a>
         <font size="2">(<a href="{% url 'movies:movie_detail' movie.id 'xml' %}">xml</a>)</font>
         <font size="2">(<a href="{% url 'movies:movie_detail' movie.id 'json' %}">json</a>)</font>
         </li>

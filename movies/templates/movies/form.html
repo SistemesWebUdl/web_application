@@ -49,8 +49,45 @@
                     }
                 }
             });
+
+            $("#id_movie_name").autocomplete({
+                source: function( request, response ) {
+                    var query = request.term;
+                    var api_key = "a8f7039633f2065942cd8a28d7cadad4";
+                    $.ajax({
+                        url: "http://api.themoviedb.org/3/search/movie?api_key="+api_key+"&query="+query,
+                        dataType: "jsonp",
+                        data: {
+                            maxRows: 10,
+                            name_startsWith: request.term,
+                        },
+                        success: function( data ) {
+                            response( $.map( data.results, function( item ) {
+                                return {
+                                    label: item.original_title +", " + item.release_date,
+                                    value: item.original_title,
+                                    date: item.release_date,
+                                    description: item.overview
+
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+
+                select: function( event, ui ) {
+                    if (ui.item) {
+                        $("#id_movie_release_date").val(ui.item.date);
+                        $("#id_description").val(ui.item.description);
+                    }
+                }
+
+            });
+
         });
     </script>
+
 
 
 {% endblock %}
