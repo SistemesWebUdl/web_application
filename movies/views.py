@@ -5,8 +5,8 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import CreateView
 
-from models import Movie, Director, Actor, Company, Country
-from forms import MovieForm, DirectorForm, ActorForm, CompanyForm, CountryForm
+from models import Movie, Director, Actor, Company, City
+from forms import MovieForm, DirectorForm, ActorForm, CompanyForm, CityForm
 
 class ConnegResponseMixin(TemplateResponseMixin):
 
@@ -55,10 +55,10 @@ class CompanyList(ListView, ConnegResponseMixin):
     template_name = 'movies/company_list.html'
 
 
-class CountryList(ListView, ConnegResponseMixin):
-    model = Country
-    context_object_name = 'latest_country_list'
-    template_name = 'movies/country_list.html'
+class CityList(ListView, ConnegResponseMixin):
+    model = City
+    context_object_name = 'latest_city_list'
+    template_name = 'movies/city_list.html'
 
 
 class MovieDetail(DetailView, ConnegResponseMixin):
@@ -103,20 +103,20 @@ class CompanyDetail(DetailView, ConnegResponseMixin):
         return context
 
 
-class CountryDetail(DetailView, ConnegResponseMixin):
-    model = Country
-    template_name = 'movies/country_detail.html'
+class CityDetail(DetailView, ConnegResponseMixin):
+    model = City
+    template_name = 'movies/city_detail.html'
 
     def get_context_data(self, **kwargs):
-        context = super(CountryDetail, self).get_context_data(**kwargs)
+        context = super(CityDetail, self).get_context_data(**kwargs)
         context['movies'] = Movie.objects.filter(
-            countries=Country.objects.filter(id=self.kwargs['pk']))
+            cities=City.objects.filter(id=self.kwargs['pk']))
         context['actors'] = Actor.objects.filter(
-            country=Country.objects.filter(id=self.kwargs['pk']))
+            city=City.objects.filter(id=self.kwargs['pk']))
         context['directors'] = Director.objects.filter(
-            country=Country.objects.filter(id=self.kwargs['pk']))
+            city=City.objects.filter(id=self.kwargs['pk']))
         context['companies'] = Company.objects.filter(
-            country=Country.objects.filter(id=self.kwargs['pk']))
+            city=City.objects.filter(id=self.kwargs['pk']))
         return context
 
 
@@ -168,14 +168,14 @@ class CompanyCreate(CreateView):
         return super(CompanyCreate, self).form_valid(form)
 
 
-class CountryCreate(CreateView):
-    model = Country
+class CityCreate(CreateView):
+    model = City
     template_name = 'movies/form.html'
-    form_class = CountryForm
+    form_class = CityForm
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         form.instance.user = self.request.user
         self.object.save()
-        return super(CountryCreate, self).form_valid(form)
+        return super(CityCreate, self).form_valid(form)
 

@@ -60,16 +60,16 @@
 </ul>
 
 <h2>
-    Countries
+    Cities
     {% if user == movie.user or user.is_superuser %}
-        (<a href="{% url 'movies:country_add' movie.id %}">add</a>)
+        (<a href="{% url 'movies:city_add' movie.id %}">add</a>)
     {% endif %}
 </h2>
 <ul>
-    {% for country in movie.countries.all %}
-        <li><a href="{% url 'movies:country_detail' country.id 'html' %}">
-            {{ country.name }}</a></li>
-    {% empty %}<li>Sorry, no country for this movie yet.</li>
+    {% for city in movie.cities.all %}
+        <li><a href="{% url 'movies:city_detail' city.id 'html' %}">
+            {{ city.city_name }}</a></li>
+    {% empty %}<li>Sorry, no city for this movie yet.</li>
     {% endfor %}
 </ul>
 

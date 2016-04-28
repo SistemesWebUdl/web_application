@@ -1,0 +1,19 @@
+{% extends "movies/base.html" %}
+{% block content %}
+<h1>
+    Cities
+    {% if user.is_authenticated %}(<a href="{% url 'movies:city_create' %}">new</a>){% endif %}
+    <font size="3">(<a href="{% url 'movies:city_list' 'xml' %}">xml</a>)</font>
+    <font size="3">(<a href="{% url 'movies:city_list' 'json' %}">json</a>)</font>
+</h1>
+<ul>
+    {% for city in latest_city_list %}
+        <li><a href="{% url 'movies:city_detail' city.id 'html' %}">
+            {{ city.city_name }}</a>
+        <font size="2">(<a href="{% url 'movies:city_detail' city.id 'xml' %}">xml</a>)</font>
+        <font size="2">(<a href="{% url 'movies:city_detail' city.id 'json' %}">json</a>)</font>
+        </li>
+    {% empty %}<li>Sorry, no cities registered yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

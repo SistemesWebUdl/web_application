@@ -11,9 +11,9 @@
     Name: {{ company.name }} <br/>
     Description: {{ company.description }} <br/>
     Webpage: {{ company.url }} <br/>
-    Country: {{ company.country }}
+    City: {{ company.city }}
     {% if user == movie.user or user.is_superuser %}
-    (<a href="{% url 'movies:country_company_edit' company.id %}">edit</a>)
+    (<a href="{% url 'movies:city_company_edit' company.id %}">edit</a>)
     {% endif %}
     <br/>
 </p>

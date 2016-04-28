@@ -18,7 +18,7 @@
                     source: countries
                 });
             }); */
-            $("#id_name").autocomplete({
+            $("#id_city_name").autocomplete({
                 source: function( request, response ) {
                     $.ajax({
                         url: "http://ws.geonames.org/searchJSON",
@@ -46,7 +46,6 @@
                     if (ui.item) {
                         $("#id_stateOrProvince").val(ui.item.stateOrProvince);
                         $("#id_country").val(ui.item.countryName);
-                        $("#id_zipCode").val("");
                     }
                 }
             });

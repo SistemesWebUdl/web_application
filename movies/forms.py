@@ -1,5 +1,5 @@
 from django.forms import ModelForm, ModelMultipleChoiceField, CheckboxSelectMultiple
-from models import Movie, Director, Actor, Company, Country
+from models import Movie, Director, Actor, Company, City
 
 class MovieForm(ModelForm):
     actors = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
@@ -8,8 +8,8 @@ class MovieForm(ModelForm):
                                          queryset=Director.objects.all())
     companies = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
                                          queryset=Company.objects.all())
-    countries = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
-                                         queryset=Country.objects.all())
+    cities = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
+                                         queryset=City.objects.all())
 
     class Meta:
         model = Movie
@@ -30,9 +30,9 @@ class CompanyForm(ModelForm):
         model = Company
         exclude = ('user', 'date',)
 
-class CountryForm(ModelForm):
+class CityForm(ModelForm):
     class Meta:
-        model = Country
+        model = City
         exclude = ('user', 'date',)
 
 class ActorAddForm(ModelForm):
@@ -59,29 +59,29 @@ class CompanyAddForm(ModelForm):
         model = Movie
         fields = ('companies',)
 
-class CountryAddForm(ModelForm):
+class CityAddForm(ModelForm):
     countries = ModelMultipleChoiceField(widget=CheckboxSelectMultiple,
-                                         queryset=Country.objects.all())
+                                         queryset=City.objects.all())
 
     class Meta:
         model = Movie
-        fields = ('countries',)
+        fields = ('cities',)
 
 
-class CountryDirectorForm(ModelForm):
+class CityDirectorForm(ModelForm):
 
     class Meta:
         model = Director
-        fields = ('country',)
+        fields = ('city',)
 
-class CountryActorForm(ModelForm):
+class CityActorForm(ModelForm):
 
     class Meta:
         model = Actor
-        fields = ('country',)
+        fields = ('city',)
 
-class CountryCompanyForm(ModelForm):
+class CityCompanyForm(ModelForm):
 
     class Meta:
         model = Company
-        fields = ('country',)
+        fields = ('city',)

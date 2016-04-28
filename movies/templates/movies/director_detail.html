@@ -12,9 +12,9 @@
     Birthday: {{ director.birthday }} <br/>
     Deathday: {{ director.deathday }} <br/>
     Webpage: {{ director.url }} <br/>
-    Country: {{ director.country }}
+    City: {{ director.city }}
     {% if user == movie.user or user.is_superuser %}
-    (<a href="{% url 'movies:country_director_edit' director.id %}">edit</a>)
+    (<a href="{% url 'movies:city_director_edit' director.id %}">edit</a>)
     {% endif %}
     <br/>
     {%  if director.image %}

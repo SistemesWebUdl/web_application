@@ -1,14 +1,16 @@
 {% extends "movies/base.html" %}
 {% block content %}
 <h1>
-    Country: {{ country.name }}
+    City: {{ city.city_name }}
     {% if user == movie.user or user.is_superuser %}
-        (<a href="{% url 'movies:country_edit' country.id %}">edit</a>)
+        (<a href="{% url 'movies:city_edit' city.id %}">edit</a>)
     {% endif %}
 </h1>
 <h2>Details:</h2>
 <p>
-    Name: {{ country.name }} <br/>
+    Name: {{ city.city_name }} <br/>
+    State or province: {{ city.stateOrProvince }} <br/>
+    Country: {{ city.country }} <br/>
 </p>
 
 <h2>
@@ -18,7 +20,7 @@
     {% for movie in movies %}
         <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
             {{ movie.name }}</a></li>
-    {% empty %}<li>Sorry, no movies for this company yet.</li>
+    {% empty %}<li>Sorry, no movies for this city yet.</li>
     {% endfor %}
 </ul>
 <h2>
@@ -28,7 +30,7 @@
     {% for actor in actors %}
         <li><a href="{% url 'movies:actor_detail' actor.id 'html' %}">
             {{ actor.name }}</a></li>
-    {% empty %}<li>Sorry, no actors for this country yet.</li>
+    {% empty %}<li>Sorry, no actors for this city yet.</li>
     {% endfor %}
 </ul>
 <h2>
@@ -38,7 +40,7 @@
     {% for director in directors %}
         <li><a href="{% url 'movies:director_detail' director.id 'html' %}">
             {{ director.name }}</a></li>
-    {% empty %}<li>Sorry, no directors for this country yet.</li>
+    {% empty %}<li>Sorry, no directors for this city yet.</li>
     {% endfor %}
 </ul>
 <h2>
@@ -48,11 +50,11 @@
     {% for company in companies %}
         <li><a href="{% url 'movies:company_detail' company.id 'html' %}">
             {{ company.name }}</a></li>
-    {% empty %}<li>Sorry, no companies for this country yet.</li>
+    {% empty %}<li>Sorry, no companies for this city yet.</li>
     {% endfor %}
 </ul>
 
 {% endblock %}
 {% block footer %}
-    Created by {{ country.user }} on {{ country.id }}
+    Created by {{ city.user }} on {{ city.id }}
 {% endblock %}
