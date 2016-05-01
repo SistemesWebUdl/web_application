@@ -85,6 +85,30 @@
 
             });
 
+            $("#id_name").autocomplete({
+                source: function( request, response ) {
+                    var query = request.term;
+                    var api_key = "a8f7039633f2065942cd8a28d7cadad4";
+                    $.ajax({
+                        url: "http://api.themoviedb.org/3/search/person?api_key="+api_key+"&query="+query,
+                        dataType: "jsonp",
+                        data: {
+                            maxRows: 10,
+                            name_startsWith: request.term,
+                        },
+                        success: function( data ) {
+                            response( $.map( data.results, function( item ) {
+                                return {
+                                    label: item.name,
+                                    value: item.name,
+                                }
+                            }));
+                        }
+                    });
+
+                },
+                minLength: 2,
+            });
         });
     </script>
 
