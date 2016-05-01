@@ -54,7 +54,7 @@
 <ul>
     {% for company in movie.companies.all %}
         <li><a href="{% url 'movies:company_detail' company.id 'html' %}">
-            {{ company.name }}</a></li>
+            {{ company.company_name }}</a></li>
     {% empty %}<li>Sorry, no company for this movie yet.</li>
     {% endfor %}
 </ul>

@@ -57,7 +57,7 @@ class Director(models.Model):
 
 
 class Company(models.Model):
-    name = models.CharField(max_length=40)
+    company_name = models.CharField(max_length=40)
     description = models.TextField(blank=True, null=True)
     url = models.URLField(blank=True, null=True)
     city = models.ForeignKey(City, blank=True, null=True)

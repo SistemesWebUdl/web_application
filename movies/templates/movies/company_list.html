@@ -9,7 +9,7 @@
 <ul>
     {% for company in latest_company_list %}
         <li><a href="{% url 'movies:company_detail' company.id 'html' %}">
-            {{ company.name }}</a>
+            {{ company.company_name }}</a>
         <font size="2">(<a href="{% url 'movies:company_detail' company.id 'xml' %}">xml</a>)</font>
         <font size="2">(<a href="{% url 'movies:company_detail' company.id 'json' %}">json</a>)</font>
         </li>
