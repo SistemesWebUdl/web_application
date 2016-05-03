@@ -24,7 +24,7 @@ class MovieSerializer(serializers.HyperlinkedModelSerializer):
 class ActorSerializer(serializers.HyperlinkedModelSerializer):
 
     uri = relations.HyperlinkedIdentityField(view_name='movies:actor-detail')
-    city = relations.HyperlinkedRelatedField(many=True, read_only=True,
+    city = relations.HyperlinkedRelatedField(read_only=True,
                                              view_name='movies:city-detail')
     user = fields.CharField(read_only=True)
 
@@ -37,7 +37,7 @@ class ActorSerializer(serializers.HyperlinkedModelSerializer):
 class DirectorSerializer(serializers.HyperlinkedModelSerializer):
 
     uri = relations.HyperlinkedIdentityField(view_name='movies:director-detail')
-    city = relations.HyperlinkedRelatedField(many=True, read_only=True,
+    city = relations.HyperlinkedRelatedField(read_only=True,
                                              view_name='movies:city-detail')
     user = fields.CharField(read_only=True)
 
@@ -50,7 +50,7 @@ class DirectorSerializer(serializers.HyperlinkedModelSerializer):
 class CompanySerializer(serializers.HyperlinkedModelSerializer):
 
     uri = relations.HyperlinkedIdentityField(view_name='movies:company-detail')
-    city = relations.HyperlinkedRelatedField(many=True, read_only=True,
+    city = relations.HyperlinkedRelatedField(read_only=True,
                                              view_name='movies:city-detail')
     user = fields.CharField(read_only=True)
 
