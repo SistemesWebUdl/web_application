@@ -1,12 +1,18 @@
-from django.utils import timezone
 from django.core import serializers
 from django.http import HttpResponse
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import CreateView
+from rest_framework import generics, permissions
+from rest_framework.decorators import api_view
+from rest_framework.reverse import reverse
+from rest_framework.response import Response
 
 from models import Movie, Director, Actor, Company, City
 from forms import MovieForm, DirectorForm, ActorForm, CompanyForm, CityForm
+from movies.serializers import MovieSerializer, ActorSerializer, CitySerializer, \
+    CompanySerializer, DirectorSerializer
+
 
 class ConnegResponseMixin(TemplateResponseMixin):
 
@@ -178,4 +184,88 @@ class CityCreate(CreateView):
         form.instance.user = self.request.user
         self.object.save()
         return super(CityCreate, self).form_valid(form)
+
+
+
+
+class IsOwnerOrReadOnly(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        # Read permissions are allowed to any request,
+        # so we'll always allow GET, HEAD or OPTIONS requests.
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        # Instance must have an attribute named `owner`.
+        return obj.user == request.user
+
+
+class APIMovieList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    queryset = Movie.objects.all()
+    model = Movie
+    serializer_class = MovieSerializer
+
+
+class APIMovieDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    queryset = Movie.objects.all()
+    model = Movie
+    serializer_class = MovieSerializer
+   
+    
+class APIActorList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    queryset = Actor.objects.all()
+    model = Actor
+    serializer_class = ActorSerializer
+
+
+class APIActorDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    queryset = Actor.objects.all()
+    model = Actor
+    serializer_class = ActorSerializer
+    
+    
+class APIDirectorList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    queryset = Director.objects.all()
+    model = Director
+    serializer_class = DirectorSerializer
+
+
+class APIDirectorDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    queryset = Director.objects.all()
+    model = Director
+    serializer_class = DirectorSerializer
+    
+
+class APICompanyList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    queryset = Company.objects.all()
+    model = Company
+    serializer_class = CompanySerializer
+
+
+class APICompanyDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    queryset = Company.objects.all()
+    model = Company
+    serializer_class = CompanySerializer
+    
+    
+class APICityList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    queryset = City.objects.all()
+    model = City
+    serializer_class = CitySerializer
+
+
+class APICityDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    queryset = City.objects.all()
+    model = City
+    serializer_class = CitySerializer
+
 

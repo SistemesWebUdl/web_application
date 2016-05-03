@@ -1,7 +1,9 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import UpdateView
 from django.views.generic.base import RedirectView
+from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework.routers import DefaultRouter
 
 from movies.forms import MovieForm, ActorForm, CompanyForm, \
     ActorAddForm, DirectorAddForm, CompanyAddForm, DirectorForm, \
@@ -11,7 +13,9 @@ from movies.models import Movie, Director, Actor, Company, City
 from views import MovieList, MovieCreate, MovieDetail, \
     DirectorList, DirectorCreate, DirectorDetail, ActorList, \
     ActorCreate, ActorDetail, CompanyList, CompanyDetail, CompanyCreate, \
-    CityList, CityDetail, CityCreate
+    CityList, CityDetail, CityCreate, APIMovieList, APIMovieDetail, APICityList, \
+    APICityDetail, APIActorList, APIActorDetail, APICompanyList, APICompanyDetail, \
+    APIDirectorList, APIDirectorDetail
 
 urlpatterns = patterns('',
     # Home page
@@ -195,6 +199,20 @@ urlpatterns = patterns('',
         name='city_company_edit'),
 
 
+)
 
+urlpatterns = format_suffix_patterns(urlpatterns, allowed=['api', 'json', 'xml'])
 
+urlpatterns += patterns('',
+    url(r'^api/$', include(DefaultRouter().urls)),
+    url(r'^api/movies/$', APIMovieList.as_view(), name='movie-list'),
+    url(r'^api/movies/(?P<pk>\d+)/$', APIMovieDetail.as_view(), name='movie-detail'),
+    url(r'^api/actors/$', APIActorList.as_view(), name='actor-list'),
+    url(r'^api/actors/(?P<pk>\d+)/$', APIActorDetail.as_view(), name='actor-detail'),
+    url(r'^api/directors/$', APIDirectorList.as_view(), name='director-list'),
+    url(r'^api/directors/(?P<pk>\d+)/$', APIDirectorDetail.as_view(), name='director-detail'),
+    url(r'^api/cities/$', APICityList.as_view(), name='city-list'),
+    url(r'^api/cities/(?P<pk>\d+)/$', APICityDetail.as_view(), name='city-detail'),
+    url(r'^api/companies/$', APICompanyList.as_view(), name='company-list'),
+    url(r'^api/companies/(?P<pk>\d+)/$', APICompanyDetail.as_view(), name='company-detail')
 )
