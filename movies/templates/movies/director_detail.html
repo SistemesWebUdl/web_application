@@ -4,6 +4,7 @@
     Director: {{ director.name }}
     {% if user == movie.user or user.is_superuser %}
         (<a href="{% url 'movies:director_edit' director.id %}">edit</a>)
+        (<a href="{% url 'movies:director_delete' director.id %}">delete</a>)
     {% endif %}
 </h1>
 <h2>Details:</h2>

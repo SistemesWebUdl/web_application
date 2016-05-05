@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DeleteView
 from django.views.generic.base import RedirectView
 
 from movies.forms import MovieForm, ActorForm, CompanyForm, \
@@ -42,6 +42,11 @@ urlpatterns = patterns('',
             form_class=MovieForm),
         name='movie_edit'),
 
+    # Delete a movie, ex: movies/movies/1/delete
+    url(r'^movies/(?P<pk>\d+)/delete/$',
+        DeleteView.as_view(
+            model=Movie),
+        name='movie_delete'),
 
     # List directors: /movies/directors.json
     url(r'^directors\.(?P<extension>(json|xml|html))$',
@@ -66,6 +71,11 @@ urlpatterns = patterns('',
             form_class=DirectorForm),
         name='director_edit'),
 
+    # Delete a director, ex: movies/directors/1/delete
+    url(r'^directors/(?P<pk>\d+)/delete/$',
+        DeleteView.as_view(
+            model=Director),
+        name='director_delete'),
 
     # List actors: /movies/actors.json
     url(r'^actors\.(?P<extension>(json|xml|html))$',
@@ -90,6 +100,11 @@ urlpatterns = patterns('',
             form_class=ActorForm),
         name='actor_edit'),
 
+    # Delete an actor, ex: movies/actors/1/delete
+    url(r'^actors/(?P<pk>\d+)/delete/$',
+        DeleteView.as_view(
+            model=Actor),
+        name='actor_delete'),
 
     # List companies: /movies/companies.json
     url(r'^companies\.(?P<extension>(json|xml|html))$',
@@ -114,6 +129,12 @@ urlpatterns = patterns('',
             form_class=CompanyForm),
         name='company_edit'),
 
+    # Delete a company, ex: movies/companies/1/delete
+    url(r'^companies/(?P<pk>\d+)/delete/$',
+        DeleteView.as_view(
+            model=Company),
+        name='company_delete'),
+
     # List countries: /movies/countries.json
     url(r'^countries\.(?P<extension>(json|xml|html))$',
         CountryList.as_view(),
@@ -137,6 +158,12 @@ urlpatterns = patterns('',
             form_class=CountryForm),
         name='country_edit'),
 
+    # Delete a country, ex: movies/country/1/delete
+    url(r'^countries/(?P<pk>\d+)/delete/$',
+        DeleteView.as_view(
+            model=Country),
+        name='country_delete'),
+
     # Add actors to movie: /movies/movies/1/actors/add/
     url(r'^movies/(?P<pk>\d+)/actors/add/$',
         UpdateView.as_view(
@@ -144,7 +171,6 @@ urlpatterns = patterns('',
             template_name='movies/form.html',
             form_class=ActorAddForm),
         name='actor_add'),
-
 
     # Add directors to movie: /movies/movies/1/directors/add/
     url(r'^movies/(?P<pk>\d+)/directors/add/$',

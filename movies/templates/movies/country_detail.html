@@ -4,6 +4,7 @@
     Country: {{ country.name }}
     {% if user == movie.user or user.is_superuser %}
         (<a href="{% url 'movies:country_edit' country.id %}">edit</a>)
+        (<a href="{% url 'movies:country_delete' country.id %}">delete</a>)
     {% endif %}
 </h1>
 <h2>Details:</h2>
