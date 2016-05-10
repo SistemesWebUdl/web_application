@@ -1,17 +1,19 @@
 from django.contrib.auth.models import User
-from django.core import serializers
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.utils import timezone
+from django.core import serializers
 from django.http import HttpResponse
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView
 from rest_framework import generics, permissions
 from django.contrib.auth.forms import UserCreationForm
-
 from models import Movie, Director, Actor, Company, City
 from forms import MovieForm, DirectorForm, ActorForm, CompanyForm, CityForm
 from movies.serializers import MovieSerializer, ActorSerializer, CitySerializer, \
     CompanySerializer, DirectorSerializer
+
+
 
 
 class ConnegResponseMixin(TemplateResponseMixin):
@@ -138,6 +140,14 @@ class MovieCreate(CreateView):
         return super(MovieCreate, self).form_valid(form)
 
 
+class MovieDelete(DeleteView):
+    model = Movie
+    template_name = 'movies/movie_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('movies:movie_list', kwargs={'extension': 'html'})
+
+
 class DirectorCreate(CreateView):
     model = Director
     template_name = 'movies/form.html'
@@ -148,6 +158,14 @@ class DirectorCreate(CreateView):
         form.instance.user = self.request.user
         self.object.save()
         return super(DirectorCreate, self).form_valid(form)
+
+
+class DirectorDelete(DeleteView):
+    model = Director
+    template_name = 'movies/director_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('movies:director_list', kwargs={'extension': 'html'})
 
 
 class ActorCreate(CreateView):
@@ -162,6 +180,14 @@ class ActorCreate(CreateView):
         return super(ActorCreate, self).form_valid(form)
 
 
+class ActorDelete(DeleteView):
+    model = Actor
+    template_name = 'movies/actor_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('movies:actor_list', kwargs={'extension': 'html'})
+
+
 class CompanyCreate(CreateView):
     model = Company
     template_name = 'movies/form.html'
@@ -172,6 +198,13 @@ class CompanyCreate(CreateView):
         form.instance.user = self.request.user
         self.object.save()
         return super(CompanyCreate, self).form_valid(form)
+
+class CompanyDelete(DeleteView):
+    model = Company
+    template_name = 'movies/company_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('movies:company_list', kwargs={'extension': 'html'})
 
 
 class CityCreate(CreateView):
@@ -185,6 +218,13 @@ class CityCreate(CreateView):
         self.object.save()
         return super(CityCreate, self).form_valid(form)
 
+
+class CityDelete(DeleteView):
+    model = City
+    template_name = 'movies/city_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('movies:city_list', kwargs={'extension': 'html'})
 
 
 
@@ -211,8 +251,8 @@ class APIMovieDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Movie.objects.all()
     model = Movie
     serializer_class = MovieSerializer
-   
-    
+
+
 class APIActorList(generics.ListCreateAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
     queryset = Actor.objects.all()
@@ -225,8 +265,8 @@ class APIActorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Actor.objects.all()
     model = Actor
     serializer_class = ActorSerializer
-    
-    
+
+
 class APIDirectorList(generics.ListCreateAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
     queryset = Director.objects.all()
@@ -239,7 +279,7 @@ class APIDirectorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Director.objects.all()
     model = Director
     serializer_class = DirectorSerializer
-    
+
 
 class APICompanyList(generics.ListCreateAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
@@ -253,8 +293,8 @@ class APICompanyDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Company.objects.all()
     model = Company
     serializer_class = CompanySerializer
-    
-    
+
+
 class APICityList(generics.ListCreateAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
     queryset = City.objects.all()
@@ -282,7 +322,3 @@ class UserCreate(CreateView):
         form.instance.user = self.request.user
         self.object.save()
         return super(UserCreate, self).form_valid(form)
-
-
-
-

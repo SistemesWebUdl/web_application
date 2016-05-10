@@ -1,0 +1,16 @@
+{% extends "movies/base.html" %}
+
+{% block content %}
+
+<h1>Delete Director</h1>
+
+<p>Are you sure you want to delete {{ director }}?</p>
+
+<form action="{% url 'movies:director_delete' director.id %}" method="POST">
+  {% csrf_token %}
+
+  <input type="submit" value="Yes, delete." />
+  <a href="{% url "movies:director_list" 'html' %}">No, cancel.</a>
+</form>
+
+{% endblock %}

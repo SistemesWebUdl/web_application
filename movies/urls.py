@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url, include
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DeleteView
 from django.views.generic.base import RedirectView
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.routers import DefaultRouter
@@ -15,7 +15,8 @@ from views import MovieList, MovieCreate, MovieDetail, \
     ActorCreate, ActorDetail, CompanyList, CompanyDetail, CompanyCreate, \
     CityList, CityDetail, CityCreate, APIMovieList, APIMovieDetail, APICityList, \
     APICityDetail, APIActorList, APIActorDetail, APICompanyList, APICompanyDetail, \
-    APIDirectorList, APIDirectorDetail, UserCreate
+    APIDirectorList, APIDirectorDetail, UserCreate, \
+    MovieDelete, DirectorDelete, ActorDelete, CompanyDelete, CityDelete
 
 urlpatterns = patterns('',
     # Home page
@@ -46,6 +47,9 @@ urlpatterns = patterns('',
             form_class=MovieForm),
         name='movie_edit'),
 
+    # Delete a movie, ex: movies/movies/1/delete
+    url(r'^movies/(?P<pk>\d+)/delete/$', MovieDelete.as_view(),
+        name='movie_delete', ),
 
     # List directors: /movies/directors.json
     url(r'^directors\.(?P<extension>(json|xml|html))$',
@@ -63,13 +67,16 @@ urlpatterns = patterns('',
         name='director_detail'),
 
     # Edit director details, ex.: /movies/directors/1/edit/
-    url(r'^director/(?P<pk>\d+)/edit/$',
+    url(r'^directors/(?P<pk>\d+)/edit/$',
         UpdateView.as_view(
             model=Director,
             template_name='movies/form.html',
             form_class=DirectorForm),
         name='director_edit'),
 
+    # Delete a director, ex: movies/directors/1/delete
+    url(r'^directors/(?P<pk>\d+)/delete/$', DirectorDelete.as_view(),
+        name='director_delete', ),
 
     # List actors: /movies/actors.json
     url(r'^actors\.(?P<extension>(json|xml|html))$',
@@ -94,6 +101,9 @@ urlpatterns = patterns('',
             form_class=ActorForm),
         name='actor_edit'),
 
+    # Delete an actor, ex: movies/actors/1/delete
+    url(r'^actors/(?P<pk>\d+)/delete/$', ActorDelete.as_view(),
+        name='actor_delete', ),
 
     # List companies: /movies/companies.json
     url(r'^companies\.(?P<extension>(json|xml|html))$',
@@ -118,6 +128,11 @@ urlpatterns = patterns('',
             form_class=CompanyForm),
         name='company_edit'),
 
+    # Delete a company, ex: movies/companies/1/delete
+    url(r'^companies/(?P<pk>\d+)/delete/$', CompanyDelete.as_view(),
+        name='company_delete', ),
+
+
     # List cities: /movies/cities.json
     url(r'^cities\.(?P<extension>(json|xml|html))$',
         CityList.as_view(),
@@ -141,6 +156,10 @@ urlpatterns = patterns('',
             form_class=CityForm),
         name='city_edit'),
 
+    # Delete a city, ex: movies/city/1/delete
+    url(r'^cities/(?P<pk>\d+)/delete/$', CityDelete.as_view(),
+        name='city_delete'),
+
     # Add actors to movie: /movies/movies/1/actors/add/
     url(r'^movies/(?P<pk>\d+)/actors/add/$',
         UpdateView.as_view(
@@ -148,7 +167,6 @@ urlpatterns = patterns('',
             template_name='movies/form.html',
             form_class=ActorAddForm),
         name='actor_add'),
-
 
     # Add directors to movie: /movies/movies/1/directors/add/
     url(r'^movies/(?P<pk>\d+)/directors/add/$',
@@ -200,7 +218,6 @@ urlpatterns = patterns('',
 
     url(r'^accounts/newuser/$', UserCreate.as_view(), name='new_user'),
 
-
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['api', 'json', 'xml'])
@@ -217,4 +234,5 @@ urlpatterns += patterns('',
     url(r'^api/cities/(?P<pk>\d+)/$', APICityDetail.as_view(), name='city-detail'),
     url(r'^api/companies/$', APICompanyList.as_view(), name='company-list'),
     url(r'^api/companies/(?P<pk>\d+)/$', APICompanyDetail.as_view(), name='company-detail')
+
 )
