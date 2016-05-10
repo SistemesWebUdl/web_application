@@ -1,4 +1,16 @@
-<form action="" method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    <input type="submit" value="Confirm" />
+{% extends "movies/base.html" %}
+
+{% block content %}
+
+<h1>Delete Actor</h1>
+
+<p>Are you sure you want to delete {{ actor }}?</p>
+
+<form action="{% url 'movies:actor_delete' actor.id %}" method="POST">
+  {% csrf_token %}
+
+  <input type="submit" value="Yes, delete." />
+  <a href="{% url "movies:actor_list" 'html' %}">No, cancel.</a>
 </form>
+
+{% endblock %}

@@ -1,12 +1,14 @@
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils import timezone
 from django.core import serializers
 from django.http import HttpResponse
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView
 
 from models import Movie, Director, Actor, Company, Country
 from forms import MovieForm, DirectorForm, ActorForm, CompanyForm, CountryForm
+
 
 class ConnegResponseMixin(TemplateResponseMixin):
 
@@ -132,6 +134,14 @@ class MovieCreate(CreateView):
         return super(MovieCreate, self).form_valid(form)
 
 
+class MovieDelete(DeleteView):
+    model = Movie
+    template_name = 'movies/movie_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('movies:movie_list', kwargs={'extension': 'html'})
+
+
 class DirectorCreate(CreateView):
     model = Director
     template_name = 'movies/form.html'
@@ -142,6 +152,14 @@ class DirectorCreate(CreateView):
         form.instance.user = self.request.user
         self.object.save()
         return super(DirectorCreate, self).form_valid(form)
+
+
+class DirectorDelete(DeleteView):
+    model = Director
+    template_name = 'movies/director_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('movies:director_list', kwargs={'extension': 'html'})
 
 
 class ActorCreate(CreateView):
@@ -156,6 +174,14 @@ class ActorCreate(CreateView):
         return super(ActorCreate, self).form_valid(form)
 
 
+class ActorDelete(DeleteView):
+    model = Actor
+    template_name = 'movies/actor_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('movies:actor_list', kwargs={'extension': 'html'})
+
+
 class CompanyCreate(CreateView):
     model = Company
     template_name = 'movies/form.html'
@@ -168,6 +194,14 @@ class CompanyCreate(CreateView):
         return super(CompanyCreate, self).form_valid(form)
 
 
+class CompanyDelete(DeleteView):
+    model = Company
+    template_name = 'movies/company_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('movies:company_list', kwargs={'extension': 'html'})
+
+
 class CountryCreate(CreateView):
     model = Country
     template_name = 'movies/form.html'
@@ -178,3 +212,11 @@ class CountryCreate(CreateView):
         form.instance.user = self.request.user
         self.object.save()
         return super(CountryCreate, self).form_valid(form)
+
+
+class CountryDelete(DeleteView):
+    model = Country
+    template_name = 'movies/country_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('movies:country_list', kwargs={'extension': 'html'})

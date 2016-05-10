@@ -11,7 +11,7 @@ from movies.models import Movie, Director, Actor, Company, Country
 from views import MovieList, MovieCreate, MovieDetail, \
     DirectorList, DirectorCreate, DirectorDetail, ActorList, \
     ActorCreate, ActorDetail, CompanyList, CompanyDetail, CompanyCreate, \
-    CountryList, CountryDetail, CountryCreate
+    CountryList, CountryDetail, CountryCreate, MovieDelete, DirectorDelete, ActorDelete, CompanyDelete, CountryDelete
 
 urlpatterns = patterns('',
     # Home page
@@ -43,10 +43,8 @@ urlpatterns = patterns('',
         name='movie_edit'),
 
     # Delete a movie, ex: movies/movies/1/delete
-    url(r'^movies/(?P<pk>\d+)/delete/$',
-        DeleteView.as_view(
-            model=Movie),
-        name='movie_delete'),
+    url(r'^movies/(?P<pk>\d+)/delete/$', MovieDelete.as_view(),
+        name='movie_delete', ),
 
     # List directors: /movies/directors.json
     url(r'^directors\.(?P<extension>(json|xml|html))$',
@@ -64,7 +62,7 @@ urlpatterns = patterns('',
         name='director_detail'),
 
     # Edit director details, ex.: /movies/directors/1/edit/
-    url(r'^director/(?P<pk>\d+)/edit/$',
+    url(r'^directors/(?P<pk>\d+)/edit/$',
         UpdateView.as_view(
             model=Director,
             template_name='movies/form.html',
@@ -72,10 +70,8 @@ urlpatterns = patterns('',
         name='director_edit'),
 
     # Delete a director, ex: movies/directors/1/delete
-    url(r'^directors/(?P<pk>\d+)/delete/$',
-        DeleteView.as_view(
-            model=Director),
-        name='director_delete'),
+    url(r'^directors/(?P<pk>\d+)/delete/$', DirectorDelete.as_view(),
+        name='director_delete', ),
 
     # List actors: /movies/actors.json
     url(r'^actors\.(?P<extension>(json|xml|html))$',
@@ -101,10 +97,8 @@ urlpatterns = patterns('',
         name='actor_edit'),
 
     # Delete an actor, ex: movies/actors/1/delete
-    url(r'^actors/(?P<pk>\d+)/delete/$',
-        DeleteView.as_view(
-            model=Actor),
-        name='actor_delete'),
+    url(r'^actors/(?P<pk>\d+)/delete/$', ActorDelete.as_view(),
+        name='actor_delete', ),
 
     # List companies: /movies/companies.json
     url(r'^companies\.(?P<extension>(json|xml|html))$',
@@ -130,10 +124,8 @@ urlpatterns = patterns('',
         name='company_edit'),
 
     # Delete a company, ex: movies/companies/1/delete
-    url(r'^companies/(?P<pk>\d+)/delete/$',
-        DeleteView.as_view(
-            model=Company),
-        name='company_delete'),
+    url(r'^companies/(?P<pk>\d+)/delete/$', CompanyDelete.as_view(),
+        name='company_delete', ),
 
     # List countries: /movies/countries.json
     url(r'^countries\.(?P<extension>(json|xml|html))$',
@@ -159,9 +151,7 @@ urlpatterns = patterns('',
         name='country_edit'),
 
     # Delete a country, ex: movies/country/1/delete
-    url(r'^countries/(?P<pk>\d+)/delete/$',
-        DeleteView.as_view(
-            model=Country),
+    url(r'^countries/(?P<pk>\d+)/delete/$', CountryDelete.as_view(),
         name='country_delete'),
 
     # Add actors to movie: /movies/movies/1/actors/add/
