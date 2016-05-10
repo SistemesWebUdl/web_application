@@ -15,7 +15,7 @@ from views import MovieList, MovieCreate, MovieDetail, \
     ActorCreate, ActorDetail, CompanyList, CompanyDetail, CompanyCreate, \
     CityList, CityDetail, CityCreate, APIMovieList, APIMovieDetail, APICityList, \
     APICityDetail, APIActorList, APIActorDetail, APICompanyList, APICompanyDetail, \
-    APIDirectorList, APIDirectorDetail
+    APIDirectorList, APIDirectorDetail, UserCreate
 
 urlpatterns = patterns('',
     # Home page
@@ -197,6 +197,8 @@ urlpatterns = patterns('',
             template_name='movies/form.html',
             form_class=CityCompanyForm),
         name='city_company_edit'),
+
+    url(r'^accounts/newuser/$', UserCreate.as_view(), name='new_user'),
 
 
 )

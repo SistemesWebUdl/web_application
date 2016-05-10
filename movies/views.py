@@ -1,12 +1,12 @@
+from django.contrib.auth.models import User
 from django.core import serializers
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponse
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import CreateView
 from rest_framework import generics, permissions
-from rest_framework.decorators import api_view
-from rest_framework.reverse import reverse
-from rest_framework.response import Response
+from django.contrib.auth.forms import UserCreationForm
 
 from models import Movie, Director, Actor, Company, City
 from forms import MovieForm, DirectorForm, ActorForm, CompanyForm, CityForm
@@ -267,5 +267,22 @@ class APICityDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = City.objects.all()
     model = City
     serializer_class = CitySerializer
+
+
+
+
+class UserCreate(CreateView):
+    model = User
+    template_name = 'movies/form.html'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('movies:movie_list', kwargs={'extension': 'html', })
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        form.instance.user = self.request.user
+        self.object.save()
+        return super(UserCreate, self).form_valid(form)
+
+
 
 
