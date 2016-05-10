@@ -2,7 +2,7 @@
 {% block content %}
 <h1>
     City: {{ city.city_name }}
-    {% if user == movie.user or user.is_superuser %}
+    {% if user == city.user or user.is_superuser %}
         (<a href="{% url 'movies:city_edit' city.id %}">edit</a>)
         (<a href="{% url 'movies:city_delete' city.id %}">delete</a>)
     {% endif %}

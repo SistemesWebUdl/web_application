@@ -2,7 +2,7 @@
 {% block content %}
 <h1>
     Actor: {{ actor.name }}
-    {% if user == movie.user or user.is_superuser %}
+    {% if user == actor.user or user.is_superuser %}
         (<a href="{% url 'movies:actor_edit' actor.id %}">edit</a>)
         (<a href="{% url 'movies:actor_delete' actor.id %}">delete</a>)
     {% endif %}

@@ -2,15 +2,15 @@
 
 {% block content %}
 
-<h1>Delete Country</h1>
+<h1>Delete city</h1>
 
-<p>Are you sure you want to delete {{ country }}?</p>
+<p>Are you sure you want to delete {{ city }}?</p>
 
-<form action="{% url 'movies:country_delete' country.id %}" method="POST">
+<form action="{% url 'movies:city_delete' city.id %}" method="POST">
   {% csrf_token %}
 
   <input type="submit" value="Yes, delete." />
-  <a href="{% url "movies:country_list" 'html' %}">No, cancel.</a>
+  <a href="{% url "movies:city_list" 'html' %}">No, cancel.</a>
 </form>
 
 {% endblock %}

@@ -2,7 +2,7 @@
 {% block content %}
 <h1>
     Company: {{ company.name }}
-    {% if user == movie.user or user.is_superuser %}
+    {% if user == company.user or user.is_superuser %}
         (<a href="{% url 'movies:company_edit' company.id %}">edit</a>)
         (<a href="{% url 'movies:company_delete' company.id %}">delete</a>)
     {% endif %}
