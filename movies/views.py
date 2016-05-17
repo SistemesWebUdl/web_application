@@ -1,13 +1,15 @@
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse, reverse_lazy
-from django.utils import timezone
 from django.core import serializers
 from django.http import HttpResponse
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from rest_framework import generics, permissions
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.decorators import method_decorator
 from models import Movie, Director, Actor, Company, City
 from forms import MovieForm, DirectorForm, ActorForm, CompanyForm, CityForm
 from movies.serializers import MovieSerializer, ActorSerializer, CitySerializer, \
@@ -38,6 +40,21 @@ class ConnegResponseMixin(TemplateResponseMixin):
                 return self.render_xml_object_response(objects=objects)
         return super(ConnegResponseMixin, self).render_to_response(context)
 
+
+class LoginRequiredMixin(object):
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+
+class CheckIsOwnerMixin(object):
+    def get_object(self, *args, **kwargs):
+        obj = super(CheckIsOwnerMixin, self).get_object(*args, **kwargs)
+        if not obj.user == self.request.user:
+            raise PermissionDenied
+        return obj
+
+class LoginRequiredCheckIsOwnerUpdateView(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
+    template_name = 'myrestaurants/form.html'
 
 class MovieList(ListView, ConnegResponseMixin):
     model = Movie
@@ -128,7 +145,7 @@ class CityDetail(DetailView, ConnegResponseMixin):
         return context
 
 
-class MovieCreate(CreateView):
+class MovieCreate(LoginRequiredMixin, CreateView):
     model = Movie
     template_name = 'movies/form.html'
     form_class = MovieForm
@@ -140,7 +157,7 @@ class MovieCreate(CreateView):
         return super(MovieCreate, self).form_valid(form)
 
 
-class MovieDelete(DeleteView):
+class MovieDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = Movie
     template_name = 'movies/movie_confirm_delete.html'
 
@@ -148,7 +165,7 @@ class MovieDelete(DeleteView):
         return reverse('movies:movie_list', kwargs={'extension': 'html'})
 
 
-class DirectorCreate(CreateView):
+class DirectorCreate(LoginRequiredMixin, CreateView):
     model = Director
     template_name = 'movies/form.html'
     form_class = DirectorForm
@@ -160,7 +177,7 @@ class DirectorCreate(CreateView):
         return super(DirectorCreate, self).form_valid(form)
 
 
-class DirectorDelete(DeleteView):
+class DirectorDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = Director
     template_name = 'movies/director_confirm_delete.html'
 
@@ -168,7 +185,7 @@ class DirectorDelete(DeleteView):
         return reverse('movies:director_list', kwargs={'extension': 'html'})
 
 
-class ActorCreate(CreateView):
+class ActorCreate(LoginRequiredMixin, CreateView):
     model = Actor
     template_name = 'movies/form.html'
     form_class = ActorForm
@@ -180,7 +197,7 @@ class ActorCreate(CreateView):
         return super(ActorCreate, self).form_valid(form)
 
 
-class ActorDelete(DeleteView):
+class ActorDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = Actor
     template_name = 'movies/actor_confirm_delete.html'
 
@@ -188,7 +205,7 @@ class ActorDelete(DeleteView):
         return reverse('movies:actor_list', kwargs={'extension': 'html'})
 
 
-class CompanyCreate(CreateView):
+class CompanyCreate(LoginRequiredMixin, CreateView):
     model = Company
     template_name = 'movies/form.html'
     form_class = CompanyForm
@@ -199,7 +216,7 @@ class CompanyCreate(CreateView):
         self.object.save()
         return super(CompanyCreate, self).form_valid(form)
 
-class CompanyDelete(DeleteView):
+class CompanyDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = Company
     template_name = 'movies/company_confirm_delete.html'
 
@@ -207,7 +224,7 @@ class CompanyDelete(DeleteView):
         return reverse('movies:company_list', kwargs={'extension': 'html'})
 
 
-class CityCreate(CreateView):
+class CityCreate(LoginRequiredMixin, CreateView):
     model = City
     template_name = 'movies/form.html'
     form_class = CityForm
@@ -219,7 +236,7 @@ class CityCreate(CreateView):
         return super(CityCreate, self).form_valid(form)
 
 
-class CityDelete(DeleteView):
+class CityDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = City
     template_name = 'movies/city_confirm_delete.html'
 
@@ -315,7 +332,7 @@ class UserCreate(CreateView):
     model = User
     template_name = 'movies/form.html'
     form_class = UserCreationForm
-    success_url = reverse_lazy('movies:movie_list', kwargs={'extension': 'html', })
+    success_url = reverse_lazy('login')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)

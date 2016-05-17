@@ -20,6 +20,7 @@ from django.views.static import serve
 from django.conf import settings
 
 urlpatterns = [
+    url(r'^', include('movies.urls', namespace='movies')),
     url(r'^admin/', admin.site.urls),
     url(r'^movies/', include('movies.urls', namespace='movies')),
     url(r'^accounts/login/$', login, name='login'),
