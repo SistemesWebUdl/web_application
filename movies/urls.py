@@ -224,7 +224,7 @@ urlpatterns = patterns('',
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['api', 'json', 'xml'])
 
 urlpatterns += patterns('',
-    url(r'^api/$', include(DefaultRouter().urls)),
+    url(r'^api/', include(DefaultRouter().urls)),
     url(r'^api/movies/$', APIMovieList.as_view(), name='movie-list'),
     url(r'^api/movies/(?P<pk>\d+)/$', APIMovieDetail.as_view(), name='movie-detail'),
     url(r'^api/actors/$', APIActorList.as_view(), name='actor-list'),
