@@ -49,7 +49,7 @@ class LoginRequiredMixin(object):
 class CheckIsOwnerMixin(object):
     def get_object(self, *args, **kwargs):
         obj = super(CheckIsOwnerMixin, self).get_object(*args, **kwargs)
-        if not obj.user == self.request.user:
+        if not obj.user == self.request.user and obj.user.is_superuser:
             raise PermissionDenied
         return obj
 
@@ -160,6 +160,7 @@ class MovieCreate(LoginRequiredMixin, CreateView):
 class MovieDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = Movie
     template_name = 'movies/movie_confirm_delete.html'
+
 
     def get_success_url(self):
         return reverse('movies:movie_list', kwargs={'extension': 'html'})
