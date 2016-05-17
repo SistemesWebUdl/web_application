@@ -157,7 +157,7 @@ class MovieCreate(LoginRequiredMixin, CreateView):
         return super(MovieCreate, self).form_valid(form)
 
 
-class MovieDelete(DeleteView):
+class MovieDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = Movie
     template_name = 'movies/movie_confirm_delete.html'
 
@@ -177,7 +177,7 @@ class DirectorCreate(LoginRequiredMixin, CreateView):
         return super(DirectorCreate, self).form_valid(form)
 
 
-class DirectorDelete(DeleteView):
+class DirectorDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = Director
     template_name = 'movies/director_confirm_delete.html'
 
@@ -197,7 +197,7 @@ class ActorCreate(LoginRequiredMixin, CreateView):
         return super(ActorCreate, self).form_valid(form)
 
 
-class ActorDelete(DeleteView):
+class ActorDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = Actor
     template_name = 'movies/actor_confirm_delete.html'
 
@@ -216,7 +216,7 @@ class CompanyCreate(LoginRequiredMixin, CreateView):
         self.object.save()
         return super(CompanyCreate, self).form_valid(form)
 
-class CompanyDelete(DeleteView):
+class CompanyDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = Company
     template_name = 'movies/company_confirm_delete.html'
 
@@ -236,7 +236,7 @@ class CityCreate(LoginRequiredMixin, CreateView):
         return super(CityCreate, self).form_valid(form)
 
 
-class CityDelete(DeleteView):
+class CityDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = City
     template_name = 'movies/city_confirm_delete.html'
 
