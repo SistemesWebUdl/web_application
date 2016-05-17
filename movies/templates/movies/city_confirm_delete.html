@@ -10,7 +10,7 @@
   {% csrf_token %}
 
   <input type="submit" value="Yes, delete." />
-  <a href="{% url "movies:city_list" 'html' %}">No, cancel.</a>
+  <a href="{% url "movies:city_detail" city.id 'html' %}">No, cancel.</a>
 </form>
 
 {% endblock %}
