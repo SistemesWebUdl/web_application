@@ -16,7 +16,8 @@ from views import MovieList, MovieCreate, MovieDetail, \
     CityList, CityDetail, CityCreate, APIMovieList, APIMovieDetail, APICityList, \
     APICityDetail, APIActorList, APIActorDetail, APICompanyList, APICompanyDetail, \
     APIDirectorList, APIDirectorDetail, UserCreate, \
-    MovieDelete, DirectorDelete, ActorDelete, CompanyDelete, CityDelete
+    MovieDelete, DirectorDelete, ActorDelete, CompanyDelete, CityDelete, \
+    LoginRequiredCheckIsOwnerUpdateView
 
 urlpatterns = patterns('',
     # Home page
@@ -41,7 +42,7 @@ urlpatterns = patterns('',
 
     # Edit movie details, ex.: /movies/movies/1/edit/
     url(r'^movies/(?P<pk>\d+)/edit/$',
-        UpdateView.as_view(
+        LoginRequiredCheckIsOwnerUpdateView.as_view(
             model=Movie,
             template_name='movies/form.html',
             form_class=MovieForm),
@@ -68,7 +69,7 @@ urlpatterns = patterns('',
 
     # Edit director details, ex.: /movies/directors/1/edit/
     url(r'^directors/(?P<pk>\d+)/edit/$',
-        UpdateView.as_view(
+        LoginRequiredCheckIsOwnerUpdateView.as_view(
             model=Director,
             template_name='movies/form.html',
             form_class=DirectorForm),
@@ -95,7 +96,7 @@ urlpatterns = patterns('',
 
     # Edit actor details, ex.: /movies/actors/1/edit/
     url(r'^actors/(?P<pk>\d+)/edit/$',
-        UpdateView.as_view(
+        LoginRequiredCheckIsOwnerUpdateView.as_view(
             model=Actor,
             template_name='movies/form.html',
             form_class=ActorForm),
@@ -122,7 +123,7 @@ urlpatterns = patterns('',
 
     # Edit companies details, ex.: /movies/companies/1/edit/
     url(r'^companies/(?P<pk>\d+)/edit/$',
-        UpdateView.as_view(
+        LoginRequiredCheckIsOwnerUpdateView.as_view(
             model=Company,
             template_name='movies/form.html',
             form_class=CompanyForm),
@@ -150,7 +151,7 @@ urlpatterns = patterns('',
 
     # Edit cities details, ex.: /movies/cities/1/edit/
     url(r'^cities/(?P<pk>\d+)/edit/$',
-        UpdateView.as_view(
+        LoginRequiredCheckIsOwnerUpdateView.as_view(
             model=City,
             template_name='movies/form.html',
             form_class=CityForm),
@@ -194,7 +195,7 @@ urlpatterns = patterns('',
 
     # Select a city for a director: /movies/directors/1/edit_city
     url(r'^directors/(?P<pk>\d+)/edit_city/$',
-        UpdateView.as_view(
+        LoginRequiredCheckIsOwnerUpdateView.as_view(
             model=Director,
             template_name='movies/form.html',
             form_class=CityDirectorForm),
@@ -202,7 +203,7 @@ urlpatterns = patterns('',
 
     # Select a city for an actor: /movies/actors/1/edit_city
     url(r'^actors/(?P<pk>\d+)/edit_city/$',
-        UpdateView.as_view(
+        LoginRequiredCheckIsOwnerUpdateView.as_view(
             model=Actor,
             template_name='movies/form.html',
             form_class=CityActorForm),
@@ -210,7 +211,7 @@ urlpatterns = patterns('',
 
     # Select a city for an actor: /movies/companies/1/edit_city
     url(r'^companies/(?P<pk>\d+)/edit_city/$',
-        UpdateView.as_view(
+        LoginRequiredCheckIsOwnerUpdateView.as_view(
             model=Company,
             template_name='movies/form.html',
             form_class=CityCompanyForm),
