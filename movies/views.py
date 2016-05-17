@@ -160,7 +160,7 @@ class MovieCreate(LoginRequiredMixin, CreateView):
 class MovieDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = Movie
     template_name = 'movies/movie_confirm_delete.html'
-
+    fields = '__all__'
 
     def get_success_url(self):
         return reverse('movies:movie_list', kwargs={'extension': 'html'})
@@ -181,6 +181,7 @@ class DirectorCreate(LoginRequiredMixin, CreateView):
 class DirectorDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = Director
     template_name = 'movies/director_confirm_delete.html'
+    fields = '__all__'
 
     def get_success_url(self):
         return reverse('movies:director_list', kwargs={'extension': 'html'})
@@ -201,6 +202,7 @@ class ActorCreate(LoginRequiredMixin, CreateView):
 class ActorDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = Actor
     template_name = 'movies/actor_confirm_delete.html'
+    fields = '__all__'
 
     def get_success_url(self):
         return reverse('movies:actor_list', kwargs={'extension': 'html'})
@@ -220,6 +222,7 @@ class CompanyCreate(LoginRequiredMixin, CreateView):
 class CompanyDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = Company
     template_name = 'movies/company_confirm_delete.html'
+    fields = '__all__'
 
     def get_success_url(self):
         return reverse('movies:company_list', kwargs={'extension': 'html'})
@@ -240,6 +243,7 @@ class CityCreate(LoginRequiredMixin, CreateView):
 class CityDelete(LoginRequiredCheckIsOwnerUpdateView, DeleteView):
     model = City
     template_name = 'movies/city_confirm_delete.html'
+    fields = '__all__'
 
     def get_success_url(self):
         return reverse('movies:city_list', kwargs={'extension': 'html'})
