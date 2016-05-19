@@ -258,7 +258,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         # Instance must have an attribute named `owner`.
-        return obj.user == request.user
+        return obj.user == request.user or request.user.is_superuser
 
 
 class APIMovieList(generics.ListCreateAPIView):
