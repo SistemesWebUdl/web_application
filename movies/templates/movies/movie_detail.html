@@ -18,7 +18,7 @@
     Description:
     <span property="description">{{ movie.description }}</span> <br/>
     {%  if movie.image %}
-        <p><img property="image" src="{{ movie.image.url }}"/></p>
+        <p><img property="image" src="{{ movie.image.url }}" alt=""/></p>
     {% endif %}
     <br/>
 </p>
@@ -31,11 +31,11 @@
 </h2>
 <ul>
     {% for director in movie.directors.all %}
-        <li><a href="{% url 'movies:director_detail' director.id 'html' %}">
-            <span property="director" typeof="Person">
-                <span property="name">{{ director.name }}</span>
-            </span>
-        </a></li>
+        <span property="director" typeof="Person">
+            <li><a property="url" href="{% url 'movies:director_detail' director.id 'html' %}">
+                    <span property="name">{{ director.name }}</span>
+            </a></li>
+        </span>
     {% empty %}<li>Sorry, no directors for this movie yet.</li>
     {% endfor %}
 </ul>
@@ -48,11 +48,11 @@
 </h2>
 <ul>
     {% for actor in movie.actors.all %}
-        <li><a href="{% url 'movies:actor_detail' actor.id 'html' %}">
-            <span property="actor" typeof="Person">
-                <span property="name">{{ actor.name }}</span>
-            </span>
-        </a></li>
+        <span property="actor" typeof="Person">
+            <li><a property="url" href="{% url 'movies:actor_detail' actor.id 'html' %}">
+                    <span property="name">{{ actor.name }}</span>
+            </a></li>
+        </span>
     {% empty %}<li>Sorry, no actors for this movie yet.</li>
     {% endfor %}
 </ul>
@@ -65,11 +65,11 @@
 </h2>
 <ul>
     {% for company in movie.companies.all %}
-        <li><a href="{% url 'movies:company_detail' company.id 'html' %}">
-            <span property="productionCompany" typeof="Organization">
-                <span property="name">{{ company.company_name }}</span>
-            </span>
-        </a></li>
+        <span property="productionCompany" typeof="Organization">
+            <li><a property="url" href="{% url 'movies:company_detail' company.id 'html' %}">
+                    <span property="name">{{ company.company_name }}</span>
+            </a></li>
+        </span>
     {% empty %}<li>Sorry, no company for this movie yet.</li>
     {% endfor %}
 </ul>
@@ -82,11 +82,11 @@
 </h2>
 <ul>
     {% for city in movie.cities.all %}
-        <li><a href="{% url 'movies:city_detail' city.id 'html' %}">
-            <span property="countryOfOrigin" typeof="Country">
+        <span property="countryOfOrigin" typeof="Country">
+        <li><a property="url" href="{% url 'movies:city_detail' city.id 'html' %}">
                 <span property="name">{{ city.city_name }}</span>
-            </span>
         </a></li>
+        </span>
     {% empty %}<li>Sorry, no city for this movie yet.</li>
     {% endfor %}
 </ul>
