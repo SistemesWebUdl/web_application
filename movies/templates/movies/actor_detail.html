@@ -30,11 +30,10 @@
 <h2>
     Films
 </h2>
-    <ul>
+     <ul>
         {% for movie in movies %}
-            <span property="movie" typeof="Movie">
-                <li><a property="url" href="{% url 'movies:movie_detail' movie.id 'html' %}">
-                    <span property="name>">{{ movie.movie_name }}</span>
+                <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
+                    {{ movie.movie_name }}
                 </a></li>
 
             </span>
