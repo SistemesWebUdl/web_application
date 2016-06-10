@@ -1,5 +1,7 @@
 {% extends "movies/base.html" %}
+{% block title %}Companies - {{ comany.name }}{% endblock %}
 {% block content %}
+<span vocab="http://schema.org" typeof="Organization">
 <h1>
     Company: {{ company.name }}
     {% if user == company.user or user.is_superuser %}
@@ -9,10 +11,11 @@
 </h1>
 <h2>Details:</h2>
 <p>
-    Name: {{ company.company_name }} <br/>
-    Description: {{ company.description }} <br/>
-    Webpage: {{ company.url }} <br/>
-    City: {{ company.city }}
+    Name: <span property="name">{{ company.name }}</span> <br/>
+    Description: <span property="description">{{ company.description }}</span> <br/>
+    Webpage: <span property="url">{{ company.url }}</span> <br/>
+    City: <span property="foundingLocation">{{ company.city }}</span> <br/>
+
     {% if user == movie.user or user.is_superuser %}
     (<a href="{% url 'movies:city_company_edit' company.id %}">edit</a>)
     {% endif %}
