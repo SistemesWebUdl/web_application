@@ -14,7 +14,10 @@
     Name: <span property="name">{{ company.name }}</span> <br/>
     Description: <span property="description">{{ company.description }}</span> <br/>
     Webpage: <span property="url">{{ company.url }}</span> <br/>
-    City: <span property="foundingLocation">{{ company.city }}</span> <br/>
+    City:
+    <span property="location" typeof="City">
+        <span property="name">{{ company.city }}</span>
+    </span> <br/>
 
     {% if user == movie.user or user.is_superuser %}
     (<a href="{% url 'movies:city_company_edit' company.id %}">edit</a>)
