@@ -3,7 +3,7 @@
 {% block content %}
 <span vocab="http://schema.org" typeof="Organization">
 <h1>
-    Company: {{ company.name }}
+    Company: {{ company.company_name }}
     {% if user == company.user or user.is_superuser %}
         (<a href="{% url 'movies:company_edit' company.id %}">edit</a>)
         (<a href="{% url 'movies:company_delete' company.id %}">delete</a>)
@@ -11,7 +11,7 @@
 </h1>
 <h2>Details:</h2>
 <p>
-    Name: <span property="name">{{ company.name }}</span> <br/>
+    Name: <span property="name">{{ company.company_name }}</span> <br/>
     Description: <span property="description">{{ company.description }}</span> <br/>
     Webpage: <span property="url">{{ company.url }}</span> <br/>
     City:
