@@ -15,7 +15,10 @@
     Birthday: <span property="birthDate">{{ director.birthday }}</span> <br/>
     Deathday: <span property="deathDate">{{ director.deathday }}</span> <br/>
     Webpage: <span property="url">{{ director.url }}</span> <br/>
-    City: <span property="homeLocation">{{ director.city }}</span> <br/>
+    City:
+    <span property="homeLocation" typeof="City">
+        <span property="name">{{ director.city }}</span>
+    </span> <br/>
 
     {% if user == movie.user or user.is_superuser %}
     (<a href="{% url 'movies:city_director_edit' director.id %}">edit</a>)
