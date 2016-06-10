@@ -1,5 +1,7 @@
 {% extends "movies/base.html" %}
+{% block title %}Directors - {{ director.name }}{% endblock %}
 {% block content %}
+ <span vocab="http://schema.org" typeof="Person">
 <h1>
     Director: {{ director.name }}
     {% if user == director.user or user.is_superuser %}
@@ -9,11 +11,12 @@
 </h1>
 <h2>Details:</h2>
 <p>
-    Name: {{ director.name }} <br/>
-    Birthday: {{ director.birthday }} <br/>
-    Deathday: {{ director.deathday }} <br/>
-    Webpage: {{ director.url }} <br/>
-    City: {{ director.city }}
+    Name: <span property="name">{{ director.name }}</span> <br/>
+    Birthday: <span property="birthDate">{{ director.birthday }}</span> <br/>
+    Deathday: <span property="deathDate">{{ director.deathday }}</span> <br/>
+    Webpage: <span property="url">{{ director.url }}</span> <br/>
+    City: <span property="homeLocation">{{ director.city }}</span> <br/>
+
     {% if user == movie.user or user.is_superuser %}
     (<a href="{% url 'movies:city_director_edit' director.id %}">edit</a>)
     {% endif %}
@@ -35,6 +38,7 @@
     {% endfor %}
 </ul>
 
+</span>
 {% endblock %}
 {% block footer %}
     Created by {{ director.user }} on {{ director.id }}
