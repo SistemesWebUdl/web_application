@@ -60,7 +60,7 @@
 <ul>
     {% for company in companies %}
         <li><a href="{% url 'movies:company_detail' company.id 'html' %}">
-            {{ company.name }}</a></li>
+            {{ company.company_name }}</a></li>
     {% empty %}<li>Sorry, no companies for this city yet.</li>
     {% endfor %}
 </ul>
