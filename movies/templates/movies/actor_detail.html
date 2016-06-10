@@ -35,8 +35,6 @@
                 <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
                     {{ movie.movie_name }}
                 </a></li>
-
-            </span>
         {% empty %}<li>Sorry, no movies for this actor yet.</li>
         {% endfor %}
     </ul>
