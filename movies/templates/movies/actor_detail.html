@@ -1,5 +1,7 @@
 {% extends "movies/base.html" %}
+{% block title %}Actors - {{ actor.name }}{% endblock %}
 {% block content %}
+ <span vocab="http://schema.org" typeof="Person">
 <h1>
     Actor: {{ actor.name }}
     {% if user == actor.user or user.is_superuser %}
@@ -9,32 +11,35 @@
 </h1>
 <h2>Details:</h2>
 <p>
-    Name: {{ actor.name }} <br/>
-    Birthday: {{ actor.birthday }} <br/>
-    Deathday: {{ actor.deathday }} <br/>
-    Webpage: {{ actor.url }} <br/>
-    City: {{ actor.city }}
+    Name: <span property="name">{{ actor.name }}</span> <br/>
+    Birthday: <span property="birthDate">{{ actor.birthday }}</span> <br/>
+    Deathday: <span property="deathDate">{{ actor.deathday }}</span> <br/>
+    Webpage: <span property="url">{{ actor.url }}</span> <br/>
+    City: <span property="homeLocation">{{ actor.city }}</span> <br/>
     {% if user == movie.user or user.is_superuser %}
         (<a href="{% url 'movies:city_actor_edit' actor.id %}">edit</a>)
     {% endif %}
     <br/>
     {%  if actor.image %}
-        <p><img src="{{ actor.image.url }}"/></p>
+        <p><img property="image" src="{{ actor.image.url }}"alt=""/></p>
     {% endif %}
     <br/>
+
 </p>
 
 <h2>
     Films
 </h2>
-<ul>
-    {% for movie in movies %}
-        <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
-            {{ movie.movie_name }}</a></li>
-    {% empty %}<li>Sorry, no movies for this actor yet.</li>
-    {% endfor %}
-</ul>
+     <ul>
+        {% for movie in movies %}
+                <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
+                    {{ movie.movie_name }}
+                </a></li>
+        {% empty %}<li>Sorry, no movies for this actor yet.</li>
+        {% endfor %}
+    </ul>
 
+</span>
 {% endblock %}
 {% block footer %}
     Created by {{ actor.user }} on {{ actor.id }}

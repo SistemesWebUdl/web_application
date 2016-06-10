@@ -1,5 +1,7 @@
 {% extends "movies/base.html" %}
+{% block title %}Cities - {{ city.name }}{% endblock %}
 {% block content %}
+<span vocab="http://schema.org" typeof="City">
 <h1>
     City: {{ city.city_name }}
     {% if user == city.user or user.is_superuser %}
@@ -9,14 +11,16 @@
 </h1>
 <h2>Details:</h2>
 <p>
-    Name: {{ city.city_name }} <br/>
-    State or province: {{ city.stateOrProvince }} <br/>
-    Country: {{ city.country }} <br/>
+    Name: <span property="name">{{ city.name }}</span> <br/>
+    State or province: <span property="containedInPlace">{{ city.stateOrProvince }}</span> <br/>
+    Country: <span property="containedInPlace">{{ city.country }}</span> <br/>
+
 </p>
 
 <h2>
     Films
 </h2>
+
 <ul>
     {% for movie in movies %}
         <li><a href="{% url 'movies:movie_detail' movie.id 'html' %}">
@@ -54,7 +58,7 @@
     {% empty %}<li>Sorry, no companies for this city yet.</li>
     {% endfor %}
 </ul>
-
+</span>
 {% endblock %}
 {% block footer %}
     Created by {{ city.user }} on {{ city.id }}
