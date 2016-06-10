@@ -12,9 +12,15 @@
 <h2>Details:</h2>
 <p>
     Name: <span property="name">{{ city.name }}</span> <br/>
-    State or province: <span property="containedInPlace">{{ city.stateOrProvince }}</span> <br/>
-    Country: <span property="containedInPlace">{{ city.country }}</span> <br/>
-
+    State or province:
+    <span property="containedInPlace" typeof="State">
+        <span property="name">{{ city.stateOrProvince }}</span>
+     <br/>
+    Country:
+        <span property="containedInPlace" typeof="Country">
+            <span property="name">{{ city.country }}</span> <br/>
+        </span>
+    </span>
 </p>
 
 <h2>
